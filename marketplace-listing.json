@@ -3,7 +3,7 @@
   "short_description": "Pay-per-call free web, scraper, temporary mailboxes, domain, and package intelligence utilities for AI agents.",
   "description": "CodePulse API exposes narrow, machine-readable free web, scraper, temporary mailboxes, domain, and package intelligence utilities AI agents can call instead of guessing: WHOIS registries, temporary mailboxes, temp phone SMS scrapers, sitemaps, RSS feeds, NPM/PyPI registries, secret scans, HaveIBeenPwned checks, PDF parsing, OCR scanners, QR builders. Paid per request with x402 on Base USDC.",
   "homepage": "https://codepulse-api.hahavoid0.workers.dev",
-  "repository": "https://github.com/Ahmed-Achtatar/codepulse-api",
+  "repository": "https://github.com/Ahmed-Achtatar/codepulse",
   "logo": "https://codepulse-api.hahavoid0.workers.dev/logo.svg",
   "openapi": "https://codepulse-api.hahavoid0.workers.dev/openapi.json",
   "llms_txt": "https://codepulse-api.hahavoid0.workers.dev/llms.txt",

@@ -1,12 +1,12 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/Agentic-API/codepulse/main/public/logo.png" width="120" alt="CodePulse Logo" />
+  <img src="https://codepulse-api.hahavoid0.workers.dev/logo.png" width="120" alt="CodePulse Logo" />
   <h1>CodePulse Agentic API</h1>
   <p><strong>The premier developer tool suite built natively for AI agents.</strong></p>
   
   <p>
-    <a href="https://github.com/Agentic-API/codepulse/actions"><img src="https://img.shields.io/github/actions/workflow/status/Agentic-API/codepulse/health.yml?label=Health%20Check&style=flat-square" alt="Health" /></a>
-    <a href="https://github.com/Agentic-API/codepulse"><img src="https://img.shields.io/badge/Architecture-Cloudflare%20Workers-f38020?style=flat-square&logo=cloudflare" alt="Cloudflare" /></a>
-    <a href="https://github.com/Agentic-API/codepulse"><img src="https://img.shields.io/badge/Payments-x402%20(Base/Solana)-0052FF?style=flat-square&logo=coinbase" alt="Payments" /></a>
+    <a href="https://github.com/Ahmed-Achtatar/codepulse/actions"><img src="https://img.shields.io/github/actions/workflow/status/Ahmed-Achtatar/codepulse/health.yml?label=Health%20Check&style=flat-square" alt="Health" /></a>
+    <a href="https://github.com/Ahmed-Achtatar/codepulse"><img src="https://img.shields.io/badge/Architecture-Cloudflare%20Workers-f38020?style=flat-square&logo=cloudflare" alt="Cloudflare" /></a>
+    <a href="https://github.com/Ahmed-Achtatar/codepulse"><img src="https://img.shields.io/badge/Payments-x402%20(Base/Solana)-0052FF?style=flat-square&logo=coinbase" alt="Payments" /></a>
   </p>
 </div>
 
@@ -58,10 +58,10 @@ Agents can use `agentcash` to hit endpoints programmatically.
 
 ```bash
 # 1. Test the schema for free
-npx agentcash@latest fetch https://codepulse.dev/web/search-preflight -m POST -b '{"q": "Cloudflare Workers"}'
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/search-preflight -m POST -b '{"q": "Cloudflare Workers"}'
 
 # 2. Execute the paid endpoint
-npx agentcash@latest fetch https://codepulse.dev/web/search -m POST -b '{"q": "Cloudflare Workers"}'
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/search -m POST -b '{"q": "Cloudflare Workers"}'
 ```
 
 ## 📂 Repository Contents
@@ -77,7 +77,7 @@ This repository serves as the public metadata and discovery index for CodePulse.
 ## 📖 OpenAPI & Discovery
 
 Agents can read the full specification and pricing by fetching the OpenAPI document:
-`GET https://codepulse.dev/openapi.json`
+`GET https://codepulse-api.hahavoid0.workers.dev/openapi.json`
 
 CodePulse automatically registers itself with known agent directories via GitHub Actions and exposes a bounty claim system at `POST /discovery/bounty-claim`.
 

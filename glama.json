@@ -1,11 +1,11 @@
 {
   "$schema": "https://glama.ai/mcp/schemas/server.json",
-  "name": "statepulse-api",
-  "description": "Pay-per-call live telemetry, environmental metrics, transit state vectors, blockchain reads, network/security lookups and real-time utilities for AI agents. No account, no API keys — pay per request with x402 USDC on Base.",
-  "url": "https://statepulse-api.hahavoid0.workers.dev/mcp",
+  "name": "codepulse-api",
+  "description": "CodePulse API exposes narrow, machine-readable free web, scraper, temporary mailboxes, domain, and package intelligence utilities AI agents can call instead of guessing: WHOIS registries, temporary mailboxes, temp phone SMS scrapers, sitemaps, RSS feeds, NPM/PyPI registries, secret scans, HaveIBeenPwned checks, PDF parsing, OCR scanners, QR builders. Paid per request with x402 on Base USDC.",
+  "url": "https://codepulse-api.hahavoid0.workers.dev/mcp",
   "transport": "http",
-  "homepage": "https://statepulse-api.hahavoid0.workers.dev",
-  "repository": "https://github.com/Ahmed-Achtatar/statepulse-api",
+  "homepage": "https://codepulse-api.hahavoid0.workers.dev",
+  "repository": "https://github.com/Ahmed-Achtatar/codepulse",
   "categories": [
     "data",
     "web-search",
