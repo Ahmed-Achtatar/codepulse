@@ -1,0 +1,17 @@
+name: Daily Health Transparency
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run daily at midnight
+  workflow_dispatch:
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Endpoint Smoke Tests
+        run: |
+          # Dummy script to simulate running tests and updating a public status JSON
+          echo "Running daily smoke tests..."
+          curl -X GET https://codepulse-api.hahavoid0.workers.dev/status --fail
+          echo "Status checks passed."

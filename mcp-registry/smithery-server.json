@@ -1,0 +1,19 @@
+{
+  "qualifiedName": "codepulse-api",
+  "displayName": "CodePulse API",
+  "description": "Pay-per-call disposable email boxes, SMS verification scraping, certificate transparency logs, whois details, sitemap parsing, HaveIBeenPwned checks, PDF parsing, OCR scanners, QR builders, sitemap readers, package registries, and DNS diagnostics for AI agents, paid for with USDC on Base or Solana.",
+  "remote": "https://codepulse-api.hahavoid0.workers.dev/mcp",
+  "homepage": "https://codepulse-api.hahavoid0.workers.dev",
+  "repository": "https://github.com/Ahmed-Achtatar/codepulse-api",
+  "tags": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "x402",
+    "ai-agents",
+    "usdc",
+    "base",
+    "pay-per-call",
+    "cloudflare-workers"
+  ]
+}

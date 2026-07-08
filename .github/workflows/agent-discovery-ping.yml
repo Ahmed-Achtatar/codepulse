@@ -1,0 +1,32 @@
+name: Agent Discovery Ping
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  ping-registries:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping x402scan
+        run: |
+          curl -X POST https://x402scan.com/api/v1/ping \
+               -H "Content-Type: application/json" \
+               -d '{"url": "https://codepulse-api.hahavoid0.workers.dev/.well-known/x402.json"}' \
+               --fail || echo "x402scan ping failed, continuing"
+
+      - name: Ping AgentCash
+        run: |
+          curl -X POST https://agentcash.com/api/discovery/submit \
+               -H "Content-Type: application/json" \
+               -d '{"url": "https://codepulse-api.hahavoid0.workers.dev/openapi.json"}' \
+               --fail || echo "AgentCash ping failed, continuing"
+
+      - name: Ping MCP Registry
+        run: |
+          curl -X POST https://registry.modelcontextprotocol.com/api/submit \
+               -H "Content-Type: application/json" \
+               -d '{"server": "https://codepulse-api.hahavoid0.workers.dev/mcp"}' \
+               --fail || echo "MCP Registry ping failed, continuing"

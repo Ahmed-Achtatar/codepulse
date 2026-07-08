@@ -1,0 +1,239 @@
+{
+  "name": "codepulse-api",
+  "display_name": "CodePulse API",
+  "description": "Pay-per-call disposable email boxes, SMS verification scraping, certificate transparency logs, whois details, sitemap parsing, HaveIBeenPwned checks, PDF parsing, OCR scanners, QR builders, sitemap readers, package registries, and DNS diagnostics for AI agents, paid for with USDC on Base or Solana.",
+  "homepage": "https://codepulse-api.hahavoid0.workers.dev",
+  "repository": "https://github.com/Ahmed-Achtatar/codepulse-api",
+  "remote": {
+    "url": "https://codepulse-api.hahavoid0.workers.dev/mcp",
+    "transport": "http"
+  },
+  "mcp_metadata": "https://codepulse-api.hahavoid0.workers.dev/.well-known/mcp.json",
+  "categories": [
+    "data",
+    "utilities",
+    "web-search",
+    "developer-tools",
+    "security"
+  ],
+  "tags": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "x402",
+    "ai-agents",
+    "usdc",
+    "base",
+    "pay-per-call",
+    "cloudflare-workers"
+  ],
+  "tool_count": 50,
+  "auth": "none",
+  "payment": {
+    "protocol": "x402",
+    "network": "eip155:8453",
+    "asset": "USDC"
+  },
+  "tools": [
+    {
+      "name": "webSearch",
+      "description": "Performs web searches using a free DuckDuckGo HTML parser. Returns organic search results."
+    },
+    {
+      "name": "webScrape",
+      "description": "Extracts clean readable text from any website URL."
+    },
+    {
+      "name": "webMarkdown",
+      "description": "Downloads HTML and compiles it to markdown locally using Turndown."
+    },
+    {
+      "name": "webMetadata",
+      "description": "Extracts OpenGraph tags, description, keywords, and page header meta tags."
+    },
+    {
+      "name": "webHistory",
+      "description": "Queries historical website snapshots from the free Archive.org API."
+    },
+    {
+      "name": "webRss",
+      "description": "Parses any public RSS or Atom XML feed URL into structured JSON."
+    },
+    {
+      "name": "webSitemap",
+      "description": "Resolves and lists all URLs inside a sitemap XML."
+    },
+    {
+      "name": "webDnsTxt",
+      "description": "Fetches TXT, MX, A, CNAME, and CAA records for a domain via Cloudflare DNS-over-HTTPS."
+    },
+    {
+      "name": "webWhois",
+      "description": "Queries global registry metadata via the public RDAP protocol to find registration details."
+    },
+    {
+      "name": "mailboxCreate",
+      "description": "Generates a temporary disposable inbox address using the free 1secmail.com service."
+    },
+    {
+      "name": "mailboxMessages",
+      "description": "Polls the disposable inbox for messages and verification codes."
+    },
+    {
+      "name": "phoneTempSms",
+      "description": "Lists active public numbers available for temporary SMS verification codes."
+    },
+    {
+      "name": "phoneMessages",
+      "description": "Queries public SMS verification boards to retrieve recent OTP codes."
+    },
+    {
+      "name": "webhookListen",
+      "description": "Generates a unique callback URL. Any POST request sent to this URL will be recorded."
+    },
+    {
+      "name": "webhookPoll",
+      "description": "Retrieves all callback request payloads received by the listener."
+    },
+    {
+      "name": "notifyTelegram",
+      "description": "Dispatches telegram messages using a bot token and chat identifier."
+    },
+    {
+      "name": "notifySlack",
+      "description": "Posts messages directly to developer channels via Slack webhooks."
+    },
+    {
+      "name": "notifyDiscord",
+      "description": "Relays markdown notification cards to Discord webhooks."
+    },
+    {
+      "name": "notifyEmail",
+      "description": "Sends automated email notifications using the Resend API."
+    },
+    {
+      "name": "domainCheck",
+      "description": "Checks domain registration availability by checking SOA DNS records."
+    },
+    {
+      "name": "domainSocial",
+      "description": "Checks availability of a handle across major social platforms (GitHub, Twitter, Reddit, YouTube, Instagram)."
+    },
+    {
+      "name": "brandPalette",
+      "description": "Parses CSS hex and rgb colors on a target website to resolve brand colors."
+    },
+    {
+      "name": "brandLogo",
+      "description": "Extracts high-resolution logo links using Clearbit's free logo API."
+    },
+    {
+      "name": "networkSslExpiry",
+      "description": "Checks domain certificate logs on CertSpotter for SSL expiry dates and issuers."
+    },
+    {
+      "name": "networkDnssec",
+      "description": "Verifies the presence of DNSSEC keys and signatures on a domain via DoH."
+    },
+    {
+      "name": "ipPatent",
+      "description": "Searches official USPTO patent database records using title query keywords or a specific patent number."
+    },
+    {
+      "name": "ipTrademark",
+      "description": "Audits word conflicts in public trademark indexes to verify name availability."
+    },
+    {
+      "name": "companySec",
+      "description": "Queries recent SEC filings (10-K, 10-Q, 8-K) by ticker or CIK identifier."
+    },
+    {
+      "name": "companyAddress",
+      "description": "Resolves official corporate address and incorporation details from SEC EDGAR registry records."
+    },
+    {
+      "name": "registryNpm",
+      "description": "Retrieves version history, dependencies, and author details from the official NPM registry."
+    },
+    {
+      "name": "registryPypi",
+      "description": "Fetches package descriptions, requirements, and release version numbers from PyPI."
+    },
+    {
+      "name": "registryCrates",
+      "description": "Looks up Rust crate details, downloads history, and dependencies from Crates.io."
+    },
+    {
+      "name": "registryGolang",
+      "description": "Queries Go release tags and modules list from proxy.golang.org."
+    },
+    {
+      "name": "registryPackagist",
+      "description": "Resolves PHP library requirements and tags from Packagist.org."
+    },
+    {
+      "name": "registryMaven",
+      "description": "Queries Java package group and artifact structures from Maven Central."
+    },
+    {
+      "name": "registryCdnjs",
+      "description": "Resolves Javascript/CSS file paths hosted on cdnjs."
+    },
+    {
+      "name": "registryGithubRepo",
+      "description": "Reads star counts, issues, forks, and description for a GitHub repository."
+    },
+    {
+      "name": "registryGithubRelease",
+      "description": "Retrieves the latest tag release and release notes for a GitHub repository."
+    },
+    {
+      "name": "registryGithubLicense",
+      "description": "Scrapes and parses repository license configurations from GitHub."
+    },
+    {
+      "name": "securitySecretScan",
+      "description": "Runs high-accuracy regular expression scans on a text block to find leaked API keys, tokens, or private keys."
+    },
+    {
+      "name": "securityCve",
+      "description": "Checks package names and versions against the free open-source vulnerability database OSV.dev."
+    },
+    {
+      "name": "securityIpAbuse",
+      "description": "Queries IP reputation scoring to detect botnet, spamming, or hacking origin IPs."
+    },
+    {
+      "name": "securityHashCheck",
+      "description": "Verifies file MD5/SHA256 threat signatures against open vulnerability directories."
+    },
+    {
+      "name": "securityPwnedPassword",
+      "description": "Securly audits passwords against HaveIBeenPwned database leaks using k-Anonymity hashing locally."
+    },
+    {
+      "name": "securityHttpHeaders",
+      "description": "Queries target URL headers to score security configurations (HSTS, CSP, X-Frame-Options)."
+    },
+    {
+      "name": "mediaPdfText",
+      "description": "Extracts and parses text strings from a public PDF document URL."
+    },
+    {
+      "name": "mediaOcr",
+      "description": "Performs optical character recognition (OCR) on an image URL to read its text."
+    },
+    {
+      "name": "mediaChart",
+      "description": "Generates charts (bar, line, pie) from JSON configuration payloads using QuickChart.io."
+    },
+    {
+      "name": "mediaQrGenerate",
+      "description": "Generates a QR code image buffer from a text string."
+    },
+    {
+      "name": "mediaBarcodeRead",
+      "description": "Decodes EAN, UPC, or ISBN barcode values from an image URL."
+    }
+  ]
+}

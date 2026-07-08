@@ -1,0 +1,2488 @@
+{
+  "name": "CodePulse API",
+  "serviceName": "CodePulse API",
+  "description": "Pay-per-call disposable email boxes, SMS verification scraping, certificate transparency logs, whois details, sitemap parsing, HaveIBeenPwned checks, PDF parsing, OCR scanners, QR builders, sitemap readers, package registries, and DNS diagnostics for AI agents, paid for with USDC on Base or Solana.",
+  "version": "1.0.1",
+  "url": "https://codepulse-api.hahavoid0.workers.dev",
+  "logoUrl": "https://codepulse-api.hahavoid0.workers.dev/logo.png",
+  "openapi": "https://codepulse-api.hahavoid0.workers.dev/openapi.json",
+  "agentCard": "https://codepulse-api.hahavoid0.workers.dev/.well-known/agent.json",
+  "llmsTxt": "https://codepulse-api.hahavoid0.workers.dev/llms.txt",
+  "terms": "https://codepulse-api.hahavoid0.workers.dev/terms",
+  "privacy": "https://codepulse-api.hahavoid0.workers.dev/privacy",
+  "facilitator": "https://api.cdp.coinbase.com/platform/v2/x402",
+  "discovery": {
+    "bazaar": true,
+    "extension": "bazaar",
+    "settlement": "cdp",
+    "cdpConfigured": true,
+    "cdpCredentialsRequiredForVerifyAndSettle": false
+  },
+  "network": "eip155:8453",
+  "networks": [
+    "eip155:8453",
+    "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp"
+  ],
+  "asset": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+  "payTo": "0x4a82F147c8A4339409C9097Adc1EedFd56E85bFE",
+  "primaryEndpoint": "https://codepulse-api.hahavoid0.workers.dev/web/search",
+  "cheapestEndpoints": [
+    {
+      "path": "/web/metadata",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/web/metadata",
+      "price": "$0.010",
+      "description": "Extracts OpenGraph tags, description, keywords, and page header meta tags.",
+      "requestExample": {
+        "url": "https://example.com"
+      }
+    },
+    {
+      "path": "/web/history",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/web/history",
+      "price": "$0.010",
+      "description": "Queries historical website snapshots from the free Archive.org API.",
+      "requestExample": {
+        "url": "https://example.com"
+      }
+    },
+    {
+      "path": "/web/rss",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/web/rss",
+      "price": "$0.010",
+      "description": "Parses any public RSS or Atom XML feed URL into structured JSON.",
+      "requestExample": {
+        "url": "https://hnrss.org/frontpage"
+      }
+    },
+    {
+      "path": "/web/sitemap",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/web/sitemap",
+      "price": "$0.010",
+      "description": "Resolves and lists all URLs inside a sitemap XML.",
+      "requestExample": {
+        "url": "https://example.com/sitemap.xml"
+      }
+    },
+    {
+      "path": "/web/dns-txt",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/web/dns-txt",
+      "price": "$0.010",
+      "description": "Fetches TXT, MX, A, CNAME, and CAA records for a domain via Cloudflare DNS-over-HTTPS.",
+      "requestExample": {
+        "domain": "google.com",
+        "type": "TXT"
+      }
+    },
+    {
+      "path": "/mailbox/create",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/mailbox/create",
+      "price": "$0.010",
+      "description": "Generates a temporary disposable inbox address using the free 1secmail.com service.",
+      "requestExample": {}
+    },
+    {
+      "path": "/mailbox/messages",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/mailbox/messages",
+      "price": "$0.010",
+      "description": "Polls the disposable inbox for messages and verification codes.",
+      "requestExample": {
+        "email": "xdf908234@1secmail.com"
+      }
+    },
+    {
+      "path": "/webhook/listen",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/webhook/listen",
+      "price": "$0.010",
+      "description": "Generates a unique callback URL. Any POST request sent to this URL will be recorded.",
+      "requestExample": {}
+    },
+    {
+      "path": "/webhook/poll",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/webhook/poll",
+      "price": "$0.010",
+      "description": "Retrieves all callback request payloads received by the listener.",
+      "requestExample": {
+        "webhook_id": "wh_38f2a28189c4"
+      }
+    },
+    {
+      "path": "/notify/telegram",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/notify/telegram",
+      "price": "$0.010",
+      "description": "Dispatches telegram messages using a bot token and chat identifier.",
+      "requestExample": {
+        "bot_token": "BOT_TOKEN",
+        "chat_id": "CHAT_ID",
+        "message": "Alert! Task has completed."
+      }
+    },
+    {
+      "path": "/notify/slack",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/notify/slack",
+      "price": "$0.010",
+      "description": "Posts messages directly to developer channels via Slack webhooks.",
+      "requestExample": {
+        "webhook_url": "https://hooks.slack.com/services/...",
+        "text": "Deploy complete."
+      }
+    },
+    {
+      "path": "/notify/discord",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/notify/discord",
+      "price": "$0.010",
+      "description": "Relays markdown notification cards to Discord webhooks.",
+      "requestExample": {
+        "webhook_url": "https://discord.com/api/webhooks/...",
+        "content": "Alert: balance low!"
+      }
+    },
+    {
+      "path": "/domain/check",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/domain/check",
+      "price": "$0.010",
+      "description": "Checks domain registration availability by checking SOA DNS records.",
+      "requestExample": {
+        "domain": "unregistered12345domain.net"
+      }
+    },
+    {
+      "path": "/brand/palette",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/brand/palette",
+      "price": "$0.010",
+      "description": "Parses CSS hex and rgb colors on a target website to resolve brand colors.",
+      "requestExample": {
+        "url": "https://example.com"
+      }
+    },
+    {
+      "path": "/brand/logo",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/brand/logo",
+      "price": "$0.010",
+      "description": "Extracts high-resolution logo links using Clearbit's free logo API.",
+      "requestExample": {
+        "domain": "stripe.com"
+      }
+    },
+    {
+      "path": "/network/ssl-expiry",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/network/ssl-expiry",
+      "price": "$0.010",
+      "description": "Checks domain certificate logs on CertSpotter for SSL expiry dates and issuers.",
+      "requestExample": {
+        "domain": "google.com"
+      }
+    },
+    {
+      "path": "/network/dnssec",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/network/dnssec",
+      "price": "$0.010",
+      "description": "Verifies the presence of DNSSEC keys and signatures on a domain via DoH.",
+      "requestExample": {
+        "domain": "cloudflare.com"
+      }
+    },
+    {
+      "path": "/registry/npm",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/npm",
+      "price": "$0.010",
+      "description": "Retrieves version history, dependencies, and author details from the official NPM registry.",
+      "requestExample": {
+        "package": "hono"
+      }
+    },
+    {
+      "path": "/registry/pypi",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/pypi",
+      "price": "$0.010",
+      "description": "Fetches package descriptions, requirements, and release version numbers from PyPI.",
+      "requestExample": {
+        "package": "requests"
+      }
+    },
+    {
+      "path": "/registry/crates",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/crates",
+      "price": "$0.010",
+      "description": "Looks up Rust crate details, downloads history, and dependencies from Crates.io.",
+      "requestExample": {
+        "crate": "tokio"
+      }
+    },
+    {
+      "path": "/registry/golang",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/golang",
+      "price": "$0.010",
+      "description": "Queries Go release tags and modules list from proxy.golang.org.",
+      "requestExample": {
+        "module": "github.com/gin-gonic/gin"
+      }
+    },
+    {
+      "path": "/registry/packagist",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/packagist",
+      "price": "$0.010",
+      "description": "Resolves PHP library requirements and tags from Packagist.org.",
+      "requestExample": {
+        "package": "monolog/monolog"
+      }
+    },
+    {
+      "path": "/registry/maven",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/maven",
+      "price": "$0.010",
+      "description": "Queries Java package group and artifact structures from Maven Central.",
+      "requestExample": {
+        "artifact": "log4j"
+      }
+    },
+    {
+      "path": "/registry/cdnjs",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/cdnjs",
+      "price": "$0.010",
+      "description": "Resolves Javascript/CSS file paths hosted on cdnjs.",
+      "requestExample": {
+        "library": "react"
+      }
+    },
+    {
+      "path": "/registry/github/repo",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/github/repo",
+      "price": "$0.010",
+      "description": "Reads star counts, issues, forks, and description for a GitHub repository.",
+      "requestExample": {
+        "repo": "honojs/hono"
+      }
+    },
+    {
+      "path": "/registry/github/release",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/github/release",
+      "price": "$0.010",
+      "description": "Retrieves the latest tag release and release notes for a GitHub repository.",
+      "requestExample": {
+        "repo": "honojs/hono"
+      }
+    },
+    {
+      "path": "/registry/github/license",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/github/license",
+      "price": "$0.010",
+      "description": "Scrapes and parses repository license configurations from GitHub.",
+      "requestExample": {
+        "repo": "honojs/hono"
+      }
+    },
+    {
+      "path": "/security/hash-check",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/security/hash-check",
+      "price": "$0.010",
+      "description": "Verifies file MD5/SHA256 threat signatures against open vulnerability directories.",
+      "requestExample": {
+        "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "path": "/security/pwned-password",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/security/pwned-password",
+      "price": "$0.010",
+      "description": "Securly audits passwords against HaveIBeenPwned database leaks using k-Anonymity hashing locally.",
+      "requestExample": {
+        "password": "password123"
+      }
+    },
+    {
+      "path": "/security/http-headers",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/security/http-headers",
+      "price": "$0.010",
+      "description": "Queries target URL headers to score security configurations (HSTS, CSP, X-Frame-Options).",
+      "requestExample": {
+        "url": "https://google.com"
+      }
+    },
+    {
+      "path": "/media/qr-generate",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/media/qr-generate",
+      "price": "$0.010",
+      "description": "Generates a QR code image buffer from a text string.",
+      "requestExample": {
+        "text": "https://codepulse-api.hahavoid0.workers.dev"
+      }
+    }
+  ],
+  "endpoints": {
+    "/web/search": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/web/search",
+      "price": "$0.020",
+      "atomicAmount": "20000",
+      "description": "Performs web searches using a free DuckDuckGo HTML parser. Returns organic search results.",
+      "keywords": "DuckDuckGo Web Search Parser Performs web searches using a free DuckDuckGo HTML parser. Returns organic search results. Use when an agent needs to perform general web searches without paid keys. web search Search for latest base chain updates {\"query\":\"base network upgrades 2026\"}",
+      "tags": [
+        "web",
+        "search"
+      ],
+      "requestExample": {
+        "query": "artificial intelligence news"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "results": [
+            {
+              "title": "Example AI Article",
+              "url": "https://example.com/ai-article",
+              "snippet": "This is a brief description of the AI article."
+            }
+          ]
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "query"
+        ],
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query keywords"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/web/scrape": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/web/scrape",
+      "price": "$0.020",
+      "atomicAmount": "20000",
+      "description": "Extracts clean readable text from any website URL.",
+      "keywords": "Web Scraping Text Extractor Extracts clean readable text from any website URL. Use when an agent needs to retrieve the main text/article from a web page. web scrape Scrape the home page of openaq {\"url\":\"https://openaq.org\"}",
+      "tags": [
+        "web",
+        "scrape"
+      ],
+      "requestExample": {
+        "url": "https://example.com"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "text": "Example Domain\nThis domain is for use in illustrative examples..."
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Website URL to scrape"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/web/markdown": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/web/markdown",
+      "price": "$0.020",
+      "atomicAmount": "20000",
+      "description": "Downloads HTML and compiles it to markdown locally using Turndown.",
+      "keywords": "HTML to Markdown Downloader Downloads HTML and compiles it to markdown locally using Turndown. Use when an agent needs a clean markdown rendering of documentation or blogs. web markdown Download documentation as markdown {\"url\":\"https://nodejs.org\"}",
+      "tags": [
+        "web",
+        "markdown"
+      ],
+      "requestExample": {
+        "url": "https://example.com"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "markdown": "# Example Domain\n\nThis domain is for use in illustrative examples..."
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Target URL to convert to markdown"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/web/metadata": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/web/metadata",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Extracts OpenGraph tags, description, keywords, and page header meta tags.",
+      "keywords": "OpenGraph & Metadata Extractor Extracts OpenGraph tags, description, keywords, and page header meta tags. Use when an agent needs to retrieve semantic details or logo URLs of a web page. web metadata Get page keywords and meta tags {\"url\":\"https://github.com\"}",
+      "tags": [
+        "web",
+        "metadata"
+      ],
+      "requestExample": {
+        "url": "https://example.com"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "title": "Example Domain",
+          "description": "Illustrative example domain description",
+          "og": {
+            "title": "Example Domain",
+            "description": "Illustrative description"
+          }
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "URL to read headers and tags from"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/web/history": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/web/history",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Queries historical website snapshots from the free Archive.org API.",
+      "keywords": "Archive.org Wayback Snapshot Query Queries historical website snapshots from the free Archive.org API. Use when an agent needs to retrieve historical snapshots of websites or verify content changes. web history Check wayback snapshot for yahoo.com {\"url\":\"https://yahoo.com\"}",
+      "tags": [
+        "web",
+        "history"
+      ],
+      "requestExample": {
+        "url": "https://example.com"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "available": true,
+          "snapshot_url": "https://web.archive.org/web/20061205213202/http://example.com:80/",
+          "timestamp": "20061205213202"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "URL to query snapshots for"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/web/rss": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/web/rss",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Parses any public RSS or Atom XML feed URL into structured JSON.",
+      "keywords": "RSS/Atom XML Feed Parser Parses any public RSS or Atom XML feed URL into structured JSON. Use when an agent needs to parse recent articles or update updates from news feeds. web rss Parse hacker news hnrss feed {\"url\":\"https://hnrss.org/frontpage\"}",
+      "tags": [
+        "web",
+        "rss"
+      ],
+      "requestExample": {
+        "url": "https://hnrss.org/frontpage"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "feed": {
+            "title": "Hacker News",
+            "link": "https://news.ycombinator.com/"
+          },
+          "items": [
+            {
+              "title": "Interesting post",
+              "link": "https://example.com/interesting",
+              "pubDate": "2026-06-25T12:00:00Z"
+            }
+          ]
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Feed XML URL"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/web/sitemap": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/web/sitemap",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Resolves and lists all URLs inside a sitemap XML.",
+      "keywords": "Sitemap XML URL Extractor Resolves and lists all URLs inside a sitemap XML. Use when an agent wants to discover all crawlable pages of a target website. web sitemap Extract links from a sitemap {\"url\":\"https://sitemaps.org/sitemap.xml\"}",
+      "tags": [
+        "web",
+        "sitemap"
+      ],
+      "requestExample": {
+        "url": "https://example.com/sitemap.xml"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "urls": [
+            "https://example.com/home",
+            "https://example.com/about"
+          ]
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "URL to sitemap.xml file"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/web/dns-txt": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/web/dns-txt",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Fetches TXT, MX, A, CNAME, and CAA records for a domain via Cloudflare DNS-over-HTTPS.",
+      "keywords": "Cloudflare DNS Records Query Fetches TXT, MX, A, CNAME, and CAA records for a domain via Cloudflare DNS-over-HTTPS. Use verifying domain configuration, email routing MX entries, or safety headers. web dns Check MX records for google.com {\"domain\":\"google.com\",\"type\":\"MX\"}",
+      "tags": [
+        "web",
+        "dns"
+      ],
+      "requestExample": {
+        "domain": "google.com",
+        "type": "TXT"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "records": [
+            "v=spf1 include:_spf.google.com ~all"
+          ]
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "domain"
+        ],
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Domain name to check"
+          },
+          "type": {
+            "type": "string",
+            "description": "DNS record type (TXT, MX, CAA, A, CNAME, NS)",
+            "default": "TXT"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/web/whois": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/web/whois",
+      "price": "$0.020",
+      "atomicAmount": "20000",
+      "description": "Queries global registry metadata via the public RDAP protocol to find registration details.",
+      "keywords": "Public WHOIS/RDAP Domain Query Queries global registry metadata via the public RDAP protocol to find registration details. Use checking domain registrar name, expiration timestamp, or creation date. web whois Lookup WHOIS details for domain {\"domain\":\"github.com\"}",
+      "tags": [
+        "web",
+        "whois"
+      ],
+      "requestExample": {
+        "domain": "google.com"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "registrar": "MarkMonitor Inc.",
+          "created_at": "1997-09-15T04:00:00Z",
+          "expired_at": "2028-09-14T04:00:00Z"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "domain"
+        ],
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Target domain name"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/mailbox/create": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/mailbox/create",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Generates a temporary disposable inbox address using the free 1secmail.com service.",
+      "keywords": "Disposable Mailbox Creator Generates a temporary disposable inbox address using the free 1secmail.com service. Use when an agent needs a temporary email address to register for web accounts or receive confirmations. mailbox temporary Create a temporary mailbox {}",
+      "tags": [
+        "mailbox",
+        "temporary"
+      ],
+      "requestExample": {},
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "email": "xdf908234@1secmail.com"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/mailbox/messages": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/mailbox/messages",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Polls the disposable inbox for messages and verification codes.",
+      "keywords": "Mailbox Message Poller Polls the disposable inbox for messages and verification codes. Use when checking for verification links or OTP codes sent to the temporary mailbox. mailbox temporary Poll email messages for user {\"email\":\"test@1secmail.com\"}",
+      "tags": [
+        "mailbox",
+        "temporary"
+      ],
+      "requestExample": {
+        "email": "xdf908234@1secmail.com"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "messages": [
+            {
+              "id": 1234,
+              "from": "no-reply@github.com",
+              "subject": "Verification Code",
+              "date": "2026-06-25 12:00:00",
+              "body": "Your code is 884732"
+            }
+          ]
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Disposable email address generated via /mailbox/create"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/phone/temp-sms": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/phone/temp-sms",
+      "price": "$0.020",
+      "atomicAmount": "20000",
+      "description": "Lists active public numbers available for temporary SMS verification codes.",
+      "keywords": "Temporary Public SMS Numbers Lists active public numbers available for temporary SMS verification codes. Use when an agent needs a public number to register or verify accounts via SMS. phone sms List available public verification phone numbers {}",
+      "tags": [
+        "phone",
+        "sms"
+      ],
+      "requestExample": {},
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "numbers": [
+            {
+              "country": "United States",
+              "number": "+19142880099",
+              "provider": "receivesms"
+            }
+          ]
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/phone/messages": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/phone/messages",
+      "price": "$0.020",
+      "atomicAmount": "20000",
+      "description": "Queries public SMS verification boards to retrieve recent OTP codes.",
+      "keywords": "SMS Message Poller Queries public SMS verification boards to retrieve recent OTP codes. Use to retrieve the OTP verification code sent to the public number. phone sms Get verification codes sent to +12134567890 {\"phone\":\"+12134567890\"}",
+      "tags": [
+        "phone",
+        "sms"
+      ],
+      "requestExample": {
+        "phone": "+12134567890"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "messages": [
+            {
+              "from": "Google",
+              "text": "G-123456 is your verification code.",
+              "date": "1 min ago"
+            }
+          ]
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "phone"
+        ],
+        "properties": {
+          "phone": {
+            "type": "string",
+            "description": "Target public phone number"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/webhook/listen": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/webhook/listen",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Generates a unique callback URL. Any POST request sent to this URL will be recorded.",
+      "keywords": "Temporary Webhook Endpoint Creator Generates a unique callback URL. Any POST request sent to this URL will be recorded. Use when an agent needs to receive a callback payload (e.g. OAuth code or payment hook). webhook temporary Create a webhook listener {}",
+      "tags": [
+        "webhook",
+        "temporary"
+      ],
+      "requestExample": {},
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "webhook_id": "wh_38f2a28189c4",
+          "callback_url": "https://codepulse-api.hahavoid0.workers.dev/webhook-callback/wh_38f2a28189c4"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/webhook/poll": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/webhook/poll",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Retrieves all callback request payloads received by the listener.",
+      "keywords": "Webhook Callback Poller Retrieves all callback request payloads received by the listener. Use to retrieve the payloads (headers, query, body) sent to the callback URL. webhook temporary Poll webhook callbacks {\"webhook_id\":\"wh_38f2a28189c4\"}",
+      "tags": [
+        "webhook",
+        "temporary"
+      ],
+      "requestExample": {
+        "webhook_id": "wh_38f2a28189c4"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "callbacks": [
+            {
+              "timestamp": "2026-06-25T12:00:00Z",
+              "method": "POST",
+              "headers": {},
+              "query": {},
+              "body": {
+                "code": "oauth_code_123"
+              }
+            }
+          ]
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "webhook_id"
+        ],
+        "properties": {
+          "webhook_id": {
+            "type": "string",
+            "description": "Listener ID generated via /webhook/listen"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/notify/telegram": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/notify/telegram",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Dispatches telegram messages using a bot token and chat identifier.",
+      "keywords": "Telegram Bot Dispatcher Dispatches telegram messages using a bot token and chat identifier. Use when an agent needs to send alerts directly to a user's Telegram account. notify telegram Send message to telegram user {\"bot_token\":\"123:abc\",\"chat_id\":\"98765\",\"message\":\"Hello from agent!\"}",
+      "tags": [
+        "notify",
+        "telegram"
+      ],
+      "requestExample": {
+        "bot_token": "BOT_TOKEN",
+        "chat_id": "CHAT_ID",
+        "message": "Alert! Task has completed."
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "success": true,
+          "messageId": 99482
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "bot_token",
+          "chat_id",
+          "message"
+        ],
+        "properties": {
+          "bot_token": {
+            "type": "string",
+            "description": "Telegram Bot API Token"
+          },
+          "chat_id": {
+            "type": "string",
+            "description": "Target chat identifier"
+          },
+          "message": {
+            "type": "string",
+            "description": "Message body text"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/notify/slack": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/notify/slack",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Posts messages directly to developer channels via Slack webhooks.",
+      "keywords": "Slack Webhook Alert Dispatcher Posts messages directly to developer channels via Slack webhooks. Use when notifying engineering or project teams inside Slack. notify slack Post alert to slack workspace {\"webhook_url\":\"https://hooks.slack.com/...\",\"text\":\"System alert: High CPU\"}",
+      "tags": [
+        "notify",
+        "slack"
+      ],
+      "requestExample": {
+        "webhook_url": "https://hooks.slack.com/services/...",
+        "text": "Deploy complete."
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "success": true
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "webhook_url",
+          "text"
+        ],
+        "properties": {
+          "webhook_url": {
+            "type": "string",
+            "description": "Slack incoming webhook URL"
+          },
+          "text": {
+            "type": "string",
+            "description": "Message text content"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/notify/discord": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/notify/discord",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Relays markdown notification cards to Discord webhooks.",
+      "keywords": "Discord Webhook Relayer Relays markdown notification cards to Discord webhooks. Use to dispatch status alerts to a Discord server channel. notify discord Relay notification card to discord channel {\"webhook_url\":\"https://discord.com/api/...\",\"content\":\"**Backup successful**\"}",
+      "tags": [
+        "notify",
+        "discord"
+      ],
+      "requestExample": {
+        "webhook_url": "https://discord.com/api/webhooks/...",
+        "content": "Alert: balance low!"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "success": true
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "webhook_url",
+          "content"
+        ],
+        "properties": {
+          "webhook_url": {
+            "type": "string",
+            "description": "Discord webhook URL"
+          },
+          "content": {
+            "type": "string",
+            "description": "Markdown text description (max 2000 chars)"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/notify/email": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/notify/email",
+      "price": "$0.020",
+      "atomicAmount": "20000",
+      "description": "Sends automated email notifications using the Resend API.",
+      "keywords": "Resend Free Email Dispatcher Sends automated email notifications using the Resend API. Use to send verification codes or summaries directly to a user's inbox. notify email Send alert to user email {\"to\":\"dev@example.com\",\"subject\":\"Failure alert\",\"body\":\"The server crashed!\"}",
+      "tags": [
+        "notify",
+        "email"
+      ],
+      "requestExample": {
+        "to": "user@example.com",
+        "subject": "Hello",
+        "body": "Hello from agent!"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "success": true,
+          "emailId": "id_123"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "to",
+          "subject",
+          "body"
+        ],
+        "properties": {
+          "to": {
+            "type": "string",
+            "description": "Recipient email address"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Email subject line"
+          },
+          "body": {
+            "type": "string",
+            "description": "Email body text (HTML supported)"
+          },
+          "api_key": {
+            "type": "string",
+            "description": "Optional Resend API key (if empty, uses worker config)"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/domain/check": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/domain/check",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Checks domain registration availability by checking SOA DNS records.",
+      "keywords": "Domain Availability SOA Checker Checks domain registration availability by checking SOA DNS records. Use when verifying if a target domain is unregistered and available for buy/registration. domain dns Check if domain is available {\"domain\":\"my-new-idea-domain.com\"}",
+      "tags": [
+        "domain",
+        "dns"
+      ],
+      "requestExample": {
+        "domain": "unregistered12345domain.net"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "domain": "unregistered12345domain.net",
+          "available": true
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "domain"
+        ],
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Domain name to check (e.g. google.com)"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/domain/social": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/domain/social",
+      "price": "$0.020",
+      "atomicAmount": "20000",
+      "description": "Checks availability of a handle across major social platforms (GitHub, Twitter, Reddit, YouTube, Instagram).",
+      "keywords": "Social Profile Handle Checker Checks availability of a handle across major social platforms (GitHub, Twitter, Reddit, YouTube, Instagram). Use to verify brand username consistency across social channels. domain social Check handle availability for startup {\"handle\":\"newstartup\"}",
+      "tags": [
+        "domain",
+        "social"
+      ],
+      "requestExample": {
+        "handle": "github"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "handle": "github",
+          "profiles": {
+            "github": {
+              "registered": true,
+              "url": "https://github.com/github"
+            }
+          }
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "handle"
+        ],
+        "properties": {
+          "handle": {
+            "type": "string",
+            "description": "Username handle to check"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/brand/palette": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/brand/palette",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Parses CSS hex and rgb colors on a target website to resolve brand colors.",
+      "keywords": "Website Official Colors Extractor Parses CSS hex and rgb colors on a target website to resolve brand colors. Use when an agent needs to determine the visual color palette of a company. brand colors Get brand colors of a site {\"url\":\"https://tailwind.com\"}",
+      "tags": [
+        "brand",
+        "colors"
+      ],
+      "requestExample": {
+        "url": "https://example.com"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "colors": [
+            "#38bdf8",
+            "#0f172a"
+          ]
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Website URL to extract colors from"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/brand/logo": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/brand/logo",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Extracts high-resolution logo links using Clearbit's free logo API.",
+      "keywords": "Clearbit Corporate Logo Resolver Extracts high-resolution logo links using Clearbit's free logo API. Use to retrieve the icon/logo link for a public business. brand logo Get corporate logo for website {\"domain\":\"google.com\"}",
+      "tags": [
+        "brand",
+        "logo"
+      ],
+      "requestExample": {
+        "domain": "stripe.com"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "logo": "https://logo.clearbit.com/stripe.com"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "domain"
+        ],
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Domain name of the company (e.g. stripe.com)"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/network/ssl-expiry": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/network/ssl-expiry",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Checks domain certificate logs on CertSpotter for SSL expiry dates and issuers.",
+      "keywords": "CertSpotter SSL Validity Checker Checks domain certificate logs on CertSpotter for SSL expiry dates and issuers. Use when an agent needs to verify if an SSL certificate is active or expiring soon. network ssl Check SSL logs for domain {\"domain\":\"github.com\"}",
+      "tags": [
+        "network",
+        "ssl"
+      ],
+      "requestExample": {
+        "domain": "google.com"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "valid": true,
+          "not_after": "2026-09-12T12:00:00Z",
+          "issuer": "Google Trust Services"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "domain"
+        ],
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Target domain name"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/network/dnssec": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/network/dnssec",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Verifies the presence of DNSSEC keys and signatures on a domain via DoH.",
+      "keywords": "DNSSEC Signatures Verifier Verifies the presence of DNSSEC keys and signatures on a domain via DoH. Use verifying if a domain is protected against DNS spoofing/poisoning. network dnssec Verify dnssec is active for domain {\"domain\":\"google.com\"}",
+      "tags": [
+        "network",
+        "dnssec"
+      ],
+      "requestExample": {
+        "domain": "cloudflare.com"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "dnssec_active": true,
+          "keys": [
+            "257 3 13 ..."
+          ]
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "domain"
+        ],
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Domain name to check"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/intellectual-property/patent": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/intellectual-property/patent",
+      "price": "$0.050",
+      "atomicAmount": "50000",
+      "description": "Searches official USPTO patent database records using title query keywords or a specific patent number.",
+      "keywords": "USPTO Official Patent Lookup Searches official USPTO patent database records using title query keywords or a specific patent number. Use to retrieve filing dates, abstracts, and inventor details of a patent. intellectual-property patent Lookup patent 10482810 {\"query\":\"10482810\"}",
+      "tags": [
+        "intellectual-property",
+        "patent"
+      ],
+      "requestExample": {
+        "query": "10000000"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "patent_number": "10000000",
+          "title": "Method of processing signals",
+          "inventor": "John Doe",
+          "date": "2018-06-19"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "query"
+        ],
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Patent number or query keywords (e.g. 10123456)"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/intellectual-property/trademark": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/intellectual-property/trademark",
+      "price": "$0.050",
+      "atomicAmount": "50000",
+      "description": "Audits word conflicts in public trademark indexes to verify name availability.",
+      "keywords": "Trademark Index Search Audits word conflicts in public trademark indexes to verify name availability. Use to verify potential conflicts prior to registering a business brand name. intellectual-property trademark Verify trademark conflicts for brand name {\"name\":\"Google\"}",
+      "tags": [
+        "intellectual-property",
+        "trademark"
+      ],
+      "requestExample": {
+        "name": "Apple"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "name": "Apple",
+          "conflicts": true,
+          "matches": [
+            {
+              "mark": "APPLE",
+              "owner": "Apple Inc."
+            }
+          ]
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Trademark name to verify"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/company/sec": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/company/sec",
+      "price": "$0.050",
+      "atomicAmount": "50000",
+      "description": "Queries recent SEC filings (10-K, 10-Q, 8-K) by ticker or CIK identifier.",
+      "keywords": "SEC EDGAR Filings Lookup Queries recent SEC filings (10-K, 10-Q, 8-K) by ticker or CIK identifier. Use to retrieve the list of recent filings and regulatory documents submitted by a public company. company sec Lookup Apple SEC filings {\"cik\":\"0000320193\"}",
+      "tags": [
+        "company",
+        "sec"
+      ],
+      "requestExample": {
+        "cik": "0000320193"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "cik": "0000320193",
+          "recent_filings": [
+            {
+              "accessionNumber": "0000320193-26-000010",
+              "form": "10-Q",
+              "filingDate": "2026-05-01",
+              "description": "Quarterly Report"
+            }
+          ]
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "cik"
+        ],
+        "properties": {
+          "cik": {
+            "type": "string",
+            "description": "10-digit SEC CIK identifier (e.g. 0000320193)"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/company/address": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/company/address",
+      "price": "$0.020",
+      "atomicAmount": "20000",
+      "description": "Resolves official corporate address and incorporation details from SEC EDGAR registry records.",
+      "keywords": "SEC Corporate Address Resolver Resolves official corporate address and incorporation details from SEC EDGAR registry records. Use verifying a public company's official registered headquarters address. company address Get Apple corporate address {\"cik\":\"0000320193\"}",
+      "tags": [
+        "company",
+        "address"
+      ],
+      "requestExample": {
+        "cik": "0000320193"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "street1": "ONE APPLE PARK WAY",
+          "city": "CUPERTINO",
+          "state": "CA",
+          "zip": "95014"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "cik"
+        ],
+        "properties": {
+          "cik": {
+            "type": "string",
+            "description": "10-digit CIK identifier"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/registry/npm": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/npm",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Retrieves version history, dependencies, and author details from the official NPM registry.",
+      "keywords": "NPM Library Resolver Retrieves version history, dependencies, and author details from the official NPM registry. Use to retrieve the latest version, dependencies, or download tags for an NPM package. registry npm Get npm stats for zod {\"package\":\"zod\"}",
+      "tags": [
+        "registry",
+        "npm"
+      ],
+      "requestExample": {
+        "package": "hono"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "version": "4.0.0",
+          "description": "Hono framework"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "package"
+        ],
+        "properties": {
+          "package": {
+            "type": "string",
+            "description": "NPM package name"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/registry/pypi": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/pypi",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Fetches package descriptions, requirements, and release version numbers from PyPI.",
+      "keywords": "PyPI Package Resolver Fetches package descriptions, requirements, and release version numbers from PyPI. Use to query PyPI library metadata or requirements. registry pypi Get package info for pydantic {\"package\":\"pydantic\"}",
+      "tags": [
+        "registry",
+        "pypi"
+      ],
+      "requestExample": {
+        "package": "requests"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "version": "2.31.0",
+          "author": "Kenneth Reitz"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "package"
+        ],
+        "properties": {
+          "package": {
+            "type": "string",
+            "description": "Python package name"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/registry/crates": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/crates",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Looks up Rust crate details, downloads history, and dependencies from Crates.io.",
+      "keywords": "Rust Crates.io Resolver Looks up Rust crate details, downloads history, and dependencies from Crates.io. Use to verify Rust library registry statuses. registry crates Check rust crate details for serde {\"crate\":\"serde\"}",
+      "tags": [
+        "registry",
+        "crates"
+      ],
+      "requestExample": {
+        "crate": "tokio"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "crate": "tokio",
+          "version": "1.35.1",
+          "downloads": 10000000
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "crate"
+        ],
+        "properties": {
+          "crate": {
+            "type": "string",
+            "description": "Rust crate name"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/registry/golang": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/golang",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Queries Go release tags and modules list from proxy.golang.org.",
+      "keywords": "Go Proxy Config Checker Queries Go release tags and modules list from proxy.golang.org. Use to verify release modules available on Go proxy pipelines. registry golang Verify gin module versions {\"module\":\"github.com/gin-gonic/gin\"}",
+      "tags": [
+        "registry",
+        "golang"
+      ],
+      "requestExample": {
+        "module": "github.com/gin-gonic/gin"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "module": "github.com/gin-gonic/gin",
+          "versions": [
+            "v1.9.1"
+          ]
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "module"
+        ],
+        "properties": {
+          "module": {
+            "type": "string",
+            "description": "Golang module URL (e.g. github.com/gin-gonic/gin)"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/registry/packagist": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/packagist",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Resolves PHP library requirements and tags from Packagist.org.",
+      "keywords": "PHP Composer Packagist Lookup Resolves PHP library requirements and tags from Packagist.org. Use verifying PHP library versions. registry packagist Check composer packages stats {\"package\":\"laravel/framework\"}",
+      "tags": [
+        "registry",
+        "packagist"
+      ],
+      "requestExample": {
+        "package": "monolog/monolog"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "package": "monolog/monolog",
+          "downloads": 50000000
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "package"
+        ],
+        "properties": {
+          "package": {
+            "type": "string",
+            "description": "Composer package slug (vendor/name, e.g. monolog/monolog)"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/registry/maven": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/maven",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Queries Java package group and artifact structures from Maven Central.",
+      "keywords": "Java Maven Package Resolver Queries Java package group and artifact structures from Maven Central. Use to retrieve the Maven coordinates for a Java artifact. registry maven Search maven repository for log4j {\"artifact\":\"log4j\"}",
+      "tags": [
+        "registry",
+        "maven"
+      ],
+      "requestExample": {
+        "artifact": "log4j"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "group": "log4j",
+          "artifact": "log4j",
+          "version": "1.2.17"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "artifact"
+        ],
+        "properties": {
+          "artifact": {
+            "type": "string",
+            "description": "Artifact name (e.g. log4j)"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/registry/cdnjs": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/cdnjs",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Resolves Javascript/CSS file paths hosted on cdnjs.",
+      "keywords": "CDNJS File Paths Resolver Resolves Javascript/CSS file paths hosted on cdnjs. Use to lookup CDN urls to import libraries in web layouts. registry cdnjs Get jquery cdn links {\"library\":\"jquery\"}",
+      "tags": [
+        "registry",
+        "cdnjs"
+      ],
+      "requestExample": {
+        "library": "react"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "library": "react",
+          "filename": "umd/react.production.min.js"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "library"
+        ],
+        "properties": {
+          "library": {
+            "type": "string",
+            "description": "Library name (e.g. jquery)"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/registry/github/repo": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/github/repo",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Reads star counts, issues, forks, and description for a GitHub repository.",
+      "keywords": "GitHub Repository Stats Lookup Reads star counts, issues, forks, and description for a GitHub repository. Use checking repository popularity metrics or health indicators. registry github Get github stats for react {\"repo\":\"facebook/react\"}",
+      "tags": [
+        "registry",
+        "github"
+      ],
+      "requestExample": {
+        "repo": "honojs/hono"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "stars": 15000,
+          "open_issues": 100
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "repo"
+        ],
+        "properties": {
+          "repo": {
+            "type": "string",
+            "description": "Repository slug (owner/name, e.g. facebook/react)"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/registry/github/release": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/github/release",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Retrieves the latest tag release and release notes for a GitHub repository.",
+      "keywords": "GitHub Tag Release Resolver Retrieves the latest tag release and release notes for a GitHub repository. Use to verify recent version tags and release note details. registry github Check latest release notes for rust {\"repo\":\"rust-lang/rust\"}",
+      "tags": [
+        "registry",
+        "github"
+      ],
+      "requestExample": {
+        "repo": "honojs/hono"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "tag_name": "v4.0.0",
+          "name": "Version 4 Release"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "repo"
+        ],
+        "properties": {
+          "repo": {
+            "type": "string",
+            "description": "Repository slug (owner/name)"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/registry/github/license": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/registry/github/license",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Scrapes and parses repository license configurations from GitHub.",
+      "keywords": "GitHub Repository License Resolver Scrapes and parses repository license configurations from GitHub. Use when an agent needs to audit open-source license compliance. registry github Verify repository license for lodash {\"repo\":\"lodash/lodash\"}",
+      "tags": [
+        "registry",
+        "github"
+      ],
+      "requestExample": {
+        "repo": "honojs/hono"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "license": "MIT"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "repo"
+        ],
+        "properties": {
+          "repo": {
+            "type": "string",
+            "description": "Repository slug (owner/name)"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/security/secret-scan": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/security/secret-scan",
+      "price": "$0.030",
+      "atomicAmount": "30000",
+      "description": "Runs high-accuracy regular expression scans on a text block to find leaked API keys, tokens, or private keys.",
+      "keywords": "Regex Private Key Scanner Runs high-accuracy regular expression scans on a text block to find leaked API keys, tokens, or private keys. Use to audit source code or logs before pushing to public repositories. security keys Scan text block for exposed credentials {\"text\":\"deploy key: xoxb-12345678-abcde\"}",
+      "tags": [
+        "security",
+        "keys"
+      ],
+      "requestExample": {
+        "text": "My database string is mysql://root:secret@localhost"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "found": true,
+          "leaks": [
+            {
+              "type": "Database credentials",
+              "match": "mysql://root:secret"
+            }
+          ]
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Text block content to scan"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/security/cve": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/security/cve",
+      "price": "$0.020",
+      "atomicAmount": "20000",
+      "description": "Checks package names and versions against the free open-source vulnerability database OSV.dev.",
+      "keywords": "OSV.dev CVE Library Vulnerabilities Checker Checks package names and versions against the free open-source vulnerability database OSV.dev. Use to audit dependency trees for registered vulnerability risks. security cve Verify vulnerabilities for library version {\"package\":\"lodash\",\"version\":\"4.17.15\"}",
+      "tags": [
+        "security",
+        "cve"
+      ],
+      "requestExample": {
+        "package": "lodash",
+        "version": "4.17.15",
+        "ecosystem": "npm"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "vulnerable": true,
+          "cves": [
+            "GHSA-48tx-fdd9-839e"
+          ]
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "package",
+          "version"
+        ],
+        "properties": {
+          "package": {
+            "type": "string",
+            "description": "Package name (e.g. lodash)"
+          },
+          "version": {
+            "type": "string",
+            "description": "Package version number (e.g. 4.17.15)"
+          },
+          "ecosystem": {
+            "type": "string",
+            "description": "Ecosystem name (npm, PyPI, Go, Crates)",
+            "default": "npm"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/security/ip-abuse": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/security/ip-abuse",
+      "price": "$0.020",
+      "atomicAmount": "20000",
+      "description": "Queries IP reputation scoring to detect botnet, spamming, or hacking origin IPs.",
+      "keywords": "AbuseIPDB IP Reputation Query Queries IP reputation scoring to detect botnet, spamming, or hacking origin IPs. Use to verify client IP quality or blocking malicious traffic. security ip Verify reputation for host IP {\"ip\":\"8.8.8.8\"}",
+      "tags": [
+        "security",
+        "ip"
+      ],
+      "requestExample": {
+        "ip": "127.0.0.1"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "ip": "127.0.0.1",
+          "abuseScore": 0
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "ip"
+        ],
+        "properties": {
+          "ip": {
+            "type": "string",
+            "description": "IPv4 or IPv6 address"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/security/hash-check": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/security/hash-check",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Verifies file MD5/SHA256 threat signatures against open vulnerability directories.",
+      "keywords": "Threat Hash Signatures Lookup Verifies file MD5/SHA256 threat signatures against open vulnerability directories. Use to audit uploaded file signatures against malware indexes. security threat Verify file md5 signature {\"hash\":\"d41d8cd98f00b204e9800998ecf8427e\"}",
+      "tags": [
+        "security",
+        "threat"
+      ],
+      "requestExample": {
+        "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "hash": "e3b0c442...",
+          "clean": true
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "hash"
+        ],
+        "properties": {
+          "hash": {
+            "type": "string",
+            "description": "MD5, SHA-1, or SHA-256 signature hash"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/security/pwned-password": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/security/pwned-password",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Securly audits passwords against HaveIBeenPwned database leaks using k-Anonymity hashing locally.",
+      "keywords": "HaveIBeenPwned Leak Checker Securly audits passwords against HaveIBeenPwned database leaks using k-Anonymity hashing locally. Use when confirming if a password is weak and has leaked in past data breaches. security password Verify if password123 is leaked {\"password\":\"password123\"}",
+      "tags": [
+        "security",
+        "password"
+      ],
+      "requestExample": {
+        "password": "password123"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "pwned": true,
+          "count": 839482
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "password"
+        ],
+        "properties": {
+          "password": {
+            "type": "string",
+            "description": "Password to verify"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/security/http-headers": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/security/http-headers",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Queries target URL headers to score security configurations (HSTS, CSP, X-Frame-Options).",
+      "keywords": "CSP & HSTS Headers Auditing Queries target URL headers to score security configurations (HSTS, CSP, X-Frame-Options). Use when an agent needs to evaluate website security configuration. security headers Audit headers of target website {\"url\":\"https://github.com\"}",
+      "tags": [
+        "security",
+        "headers"
+      ],
+      "requestExample": {
+        "url": "https://google.com"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "score": 80,
+          "headers": {
+            "hsts": true,
+            "csp": false
+          }
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "URL to parse"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/media/pdf-text": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/media/pdf-text",
+      "price": "$0.050",
+      "atomicAmount": "50000",
+      "description": "Extracts and parses text strings from a public PDF document URL.",
+      "keywords": "Local PDF Text Extractor Extracts and parses text strings from a public PDF document URL. Use to read the textual contents of invoices, whitepapers, or manuals in PDF format. media pdf Read text from dummy PDF {\"url\":\"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf\"}",
+      "tags": [
+        "media",
+        "pdf"
+      ],
+      "requestExample": {
+        "url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "text": "Dummy PDF file"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "URL pointing to a public PDF document"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/media/ocr": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/media/ocr",
+      "price": "$0.050",
+      "atomicAmount": "50000",
+      "description": "Performs optical character recognition (OCR) on an image URL to read its text.",
+      "keywords": "OCR.space Image Text Reader Performs optical character recognition (OCR) on an image URL to read its text. Use to extract text from screenshots, scanned receipts, or product labels. media ocr Read text from receipt image {\"image_url\":\"https://receive-sms-free.cc/logo.png\"}",
+      "tags": [
+        "media",
+        "ocr"
+      ],
+      "requestExample": {
+        "image_url": "https://i.imgur.com/example.png"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "text": "Extracted receipt content..."
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "image_url"
+        ],
+        "properties": {
+          "image_url": {
+            "type": "string",
+            "description": "URL of the target PNG/JPG image"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/media/chart": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/media/chart",
+      "price": "$0.020",
+      "atomicAmount": "20000",
+      "description": "Generates charts (bar, line, pie) from JSON configuration payloads using QuickChart.io.",
+      "keywords": "QuickChart.io Visual Generator Generates charts (bar, line, pie) from JSON configuration payloads using QuickChart.io. Use when an agent needs to generate graphical dashboard reports or trends diagrams. media chart Generate sales report bar chart {\"chart_config\":{\"type\":\"bar\",\"data\":{\"labels\":[\"Jan\",\"Feb\"],\"datasets\":[{\"label\":\"Revenue\",\"data\":[10,25]}]}}}",
+      "tags": [
+        "media",
+        "chart"
+      ],
+      "requestExample": {
+        "chart_config": {
+          "type": "bar",
+          "data": {
+            "labels": [
+              "Q1",
+              "Q2"
+            ],
+            "datasets": [
+              {
+                "label": "Sales",
+                "data": [
+                  100,
+                  200
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "chart_url": "https://quickchart.io/chart?c=..."
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "chart_config"
+        ],
+        "properties": {
+          "chart_config": {
+            "type": "object",
+            "description": "Chart.js compatible configuration JSON"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/media/qr-generate": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/media/qr-generate",
+      "price": "$0.010",
+      "atomicAmount": "10000",
+      "description": "Generates a QR code image buffer from a text string.",
+      "keywords": "Local QR Code Buffer Generator Generates a QR code image buffer from a text string. Use to generate scan links for mobile wallet deposits or logins. media qr Generate QR code for stripe invoice link {\"text\":\"https://stripe.com/invoice/1234\"}",
+      "tags": [
+        "media",
+        "qr"
+      ],
+      "requestExample": {
+        "text": "https://codepulse-api.hahavoid0.workers.dev"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "qr_url": "https://api.qrserver.com/..."
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Text or URL payload to encode in the QR code"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    },
+    "/media/barcode-read": {
+      "method": "POST",
+      "url": "https://codepulse-api.hahavoid0.workers.dev/media/barcode-read",
+      "price": "$0.020",
+      "atomicAmount": "20000",
+      "description": "Decodes EAN, UPC, or ISBN barcode values from an image URL.",
+      "keywords": "Barcode Image Parity Decoder Decodes EAN, UPC, or ISBN barcode values from an image URL. Use to resolve a physical product barcode image into a barcode string. media barcode Read barcode from image {\"image_url\":\"https://upcitemdb.com/logo.png\"}",
+      "tags": [
+        "media",
+        "barcode"
+      ],
+      "requestExample": {
+        "image_url": "https://i.imgur.com/example-barcode.png"
+      },
+      "responseExample": {
+        "supported": true,
+        "result": {
+          "found": true,
+          "barcode": "9780140449136",
+          "format": "EAN_13"
+        },
+        "confidence": "high",
+        "warnings": [],
+        "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+        "data_as_of": "2026-06"
+      },
+      "requestSchema": {
+        "type": "object",
+        "required": [
+          "image_url"
+        ],
+        "properties": {
+          "image_url": {
+            "type": "string",
+            "description": "URL of the target barcode image"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object"
+      }
+    }
+  }
+}

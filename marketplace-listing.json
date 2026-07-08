@@ -1,0 +1,381 @@
+{
+  "name": "CodePulse API",
+  "short_description": "Pay-per-call free web, scraper, temporary mailboxes, domain, and package intelligence utilities for AI agents.",
+  "description": "CodePulse API exposes narrow, machine-readable free web, scraper, temporary mailboxes, domain, and package intelligence utilities AI agents can call instead of guessing: WHOIS registries, temporary mailboxes, temp phone SMS scrapers, sitemaps, RSS feeds, NPM/PyPI registries, secret scans, HaveIBeenPwned checks, PDF parsing, OCR scanners, QR builders. Paid per request with x402 on Base USDC.",
+  "homepage": "https://codepulse-api.hahavoid0.workers.dev",
+  "repository": "https://github.com/Ahmed-Achtatar/codepulse-api",
+  "logo": "https://codepulse-api.hahavoid0.workers.dev/logo.svg",
+  "openapi": "https://codepulse-api.hahavoid0.workers.dev/openapi.json",
+  "llms_txt": "https://codepulse-api.hahavoid0.workers.dev/llms.txt",
+  "x402": "https://codepulse-api.hahavoid0.workers.dev/.well-known/x402.json",
+  "mcp": "https://codepulse-api.hahavoid0.workers.dev/mcp",
+  "mcp_metadata": "https://codepulse-api.hahavoid0.workers.dev/.well-known/mcp.json",
+  "agent_card": "https://codepulse-api.hahavoid0.workers.dev/.well-known/agent-card.json",
+  "categories": [
+    "Data",
+    "Utilities"
+  ],
+  "tags": [
+    "x402",
+    "mcp",
+    "ai-agents",
+    "pay-per-call",
+    "scraping",
+    "whois",
+    "npm",
+    "security",
+    "cloudflare-workers"
+  ],
+  "services": [
+    {
+      "name": "Performs web searches using a free DuckDuckGo HTML parser",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/web/search",
+      "method": "POST",
+      "price_usd": "0.020",
+      "description": "Performs web searches using a free DuckDuckGo HTML parser. Returns organic search results."
+    },
+    {
+      "name": "Extracts clean readable text from any website URL",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/web/scrape",
+      "method": "POST",
+      "price_usd": "0.020",
+      "description": "Extracts clean readable text from any website URL."
+    },
+    {
+      "name": "Downloads HTML and compiles it to markdown locally using Turndown",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/web/markdown",
+      "method": "POST",
+      "price_usd": "0.020",
+      "description": "Downloads HTML and compiles it to markdown locally using Turndown."
+    },
+    {
+      "name": "Extracts OpenGraph tags, description, keywords, and page header meta tags",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/web/metadata",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Extracts OpenGraph tags, description, keywords, and page header meta tags."
+    },
+    {
+      "name": "Queries historical website snapshots from the free Archive",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/web/history",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Queries historical website snapshots from the free Archive.org API."
+    },
+    {
+      "name": "Parses any public RSS or Atom XML feed URL into structured JSON",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/web/rss",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Parses any public RSS or Atom XML feed URL into structured JSON."
+    },
+    {
+      "name": "Resolves and lists all URLs inside a sitemap XML",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/web/sitemap",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Resolves and lists all URLs inside a sitemap XML."
+    },
+    {
+      "name": "Fetches TXT, MX, A, CNAME, and CAA records for a domain via Cloudflare DNS-over-HTTPS",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/web/dns-txt",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Fetches TXT, MX, A, CNAME, and CAA records for a domain via Cloudflare DNS-over-HTTPS."
+    },
+    {
+      "name": "Queries global registry metadata via the public RDAP protocol to find registration details",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/web/whois",
+      "method": "POST",
+      "price_usd": "0.020",
+      "description": "Queries global registry metadata via the public RDAP protocol to find registration details."
+    },
+    {
+      "name": "Generates a temporary disposable inbox address using the free 1secmail",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/mailbox/create",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Generates a temporary disposable inbox address using the free 1secmail.com service."
+    },
+    {
+      "name": "Polls the disposable inbox for messages and verification codes",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/mailbox/messages",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Polls the disposable inbox for messages and verification codes."
+    },
+    {
+      "name": "Lists active public numbers available for temporary SMS verification codes",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/phone/temp-sms",
+      "method": "POST",
+      "price_usd": "0.020",
+      "description": "Lists active public numbers available for temporary SMS verification codes."
+    },
+    {
+      "name": "Queries public SMS verification boards to retrieve recent OTP codes",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/phone/messages",
+      "method": "POST",
+      "price_usd": "0.020",
+      "description": "Queries public SMS verification boards to retrieve recent OTP codes."
+    },
+    {
+      "name": "Generates a unique callback URL",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/webhook/listen",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Generates a unique callback URL. Any POST request sent to this URL will be recorded."
+    },
+    {
+      "name": "Retrieves all callback request payloads received by the listener",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/webhook/poll",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Retrieves all callback request payloads received by the listener."
+    },
+    {
+      "name": "Dispatches telegram messages using a bot token and chat identifier",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/notify/telegram",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Dispatches telegram messages using a bot token and chat identifier."
+    },
+    {
+      "name": "Posts messages directly to developer channels via Slack webhooks",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/notify/slack",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Posts messages directly to developer channels via Slack webhooks."
+    },
+    {
+      "name": "Relays markdown notification cards to Discord webhooks",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/notify/discord",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Relays markdown notification cards to Discord webhooks."
+    },
+    {
+      "name": "Sends automated email notifications using the Resend API",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/notify/email",
+      "method": "POST",
+      "price_usd": "0.020",
+      "description": "Sends automated email notifications using the Resend API."
+    },
+    {
+      "name": "Checks domain registration availability by checking SOA DNS records",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/domain/check",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Checks domain registration availability by checking SOA DNS records."
+    },
+    {
+      "name": "Checks availability of a handle across major social platforms (GitHub, Twitter, Reddit, YouTube, Instagram)",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/domain/social",
+      "method": "POST",
+      "price_usd": "0.020",
+      "description": "Checks availability of a handle across major social platforms (GitHub, Twitter, Reddit, YouTube, Instagram)."
+    },
+    {
+      "name": "Parses CSS hex and rgb colors on a target website to resolve brand colors",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/brand/palette",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Parses CSS hex and rgb colors on a target website to resolve brand colors."
+    },
+    {
+      "name": "Extracts high-resolution logo links using Clearbit's free logo API",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/brand/logo",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Extracts high-resolution logo links using Clearbit's free logo API."
+    },
+    {
+      "name": "Checks domain certificate logs on CertSpotter for SSL expiry dates and issuers",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/network/ssl-expiry",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Checks domain certificate logs on CertSpotter for SSL expiry dates and issuers."
+    },
+    {
+      "name": "Verifies the presence of DNSSEC keys and signatures on a domain via DoH",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/network/dnssec",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Verifies the presence of DNSSEC keys and signatures on a domain via DoH."
+    },
+    {
+      "name": "Searches official USPTO patent database records using title query keywords or a specific patent number",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/intellectual-property/patent",
+      "method": "POST",
+      "price_usd": "0.050",
+      "description": "Searches official USPTO patent database records using title query keywords or a specific patent number."
+    },
+    {
+      "name": "Audits word conflicts in public trademark indexes to verify name availability",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/intellectual-property/trademark",
+      "method": "POST",
+      "price_usd": "0.050",
+      "description": "Audits word conflicts in public trademark indexes to verify name availability."
+    },
+    {
+      "name": "Queries recent SEC filings (10-K, 10-Q, 8-K) by ticker or CIK identifier",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/company/sec",
+      "method": "POST",
+      "price_usd": "0.050",
+      "description": "Queries recent SEC filings (10-K, 10-Q, 8-K) by ticker or CIK identifier."
+    },
+    {
+      "name": "Resolves official corporate address and incorporation details from SEC EDGAR registry records",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/company/address",
+      "method": "POST",
+      "price_usd": "0.020",
+      "description": "Resolves official corporate address and incorporation details from SEC EDGAR registry records."
+    },
+    {
+      "name": "Retrieves version history, dependencies, and author details from the official NPM registry",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/registry/npm",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Retrieves version history, dependencies, and author details from the official NPM registry."
+    },
+    {
+      "name": "Fetches package descriptions, requirements, and release version numbers from PyPI",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/registry/pypi",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Fetches package descriptions, requirements, and release version numbers from PyPI."
+    },
+    {
+      "name": "Looks up Rust crate details, downloads history, and dependencies from Crates",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/registry/crates",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Looks up Rust crate details, downloads history, and dependencies from Crates.io."
+    },
+    {
+      "name": "Queries Go release tags and modules list from proxy",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/registry/golang",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Queries Go release tags and modules list from proxy.golang.org."
+    },
+    {
+      "name": "Resolves PHP library requirements and tags from Packagist",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/registry/packagist",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Resolves PHP library requirements and tags from Packagist.org."
+    },
+    {
+      "name": "Queries Java package group and artifact structures from Maven Central",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/registry/maven",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Queries Java package group and artifact structures from Maven Central."
+    },
+    {
+      "name": "Resolves Javascript/CSS file paths hosted on cdnjs",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/registry/cdnjs",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Resolves Javascript/CSS file paths hosted on cdnjs."
+    },
+    {
+      "name": "Reads star counts, issues, forks, and description for a GitHub repository",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/registry/github/repo",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Reads star counts, issues, forks, and description for a GitHub repository."
+    },
+    {
+      "name": "Retrieves the latest tag release and release notes for a GitHub repository",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/registry/github/release",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Retrieves the latest tag release and release notes for a GitHub repository."
+    },
+    {
+      "name": "Scrapes and parses repository license configurations from GitHub",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/registry/github/license",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Scrapes and parses repository license configurations from GitHub."
+    },
+    {
+      "name": "Runs high-accuracy regular expression scans on a text block to find leaked API keys, tokens, or private keys",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/security/secret-scan",
+      "method": "POST",
+      "price_usd": "0.030",
+      "description": "Runs high-accuracy regular expression scans on a text block to find leaked API keys, tokens, or private keys."
+    },
+    {
+      "name": "Checks package names and versions against the free open-source vulnerability database OSV",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/security/cve",
+      "method": "POST",
+      "price_usd": "0.020",
+      "description": "Checks package names and versions against the free open-source vulnerability database OSV.dev."
+    },
+    {
+      "name": "Queries IP reputation scoring to detect botnet, spamming, or hacking origin IPs",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/security/ip-abuse",
+      "method": "POST",
+      "price_usd": "0.020",
+      "description": "Queries IP reputation scoring to detect botnet, spamming, or hacking origin IPs."
+    },
+    {
+      "name": "Verifies file MD5/SHA256 threat signatures against open vulnerability directories",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/security/hash-check",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Verifies file MD5/SHA256 threat signatures against open vulnerability directories."
+    },
+    {
+      "name": "Securly audits passwords against HaveIBeenPwned database leaks using k-Anonymity hashing locally",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/security/pwned-password",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Securly audits passwords against HaveIBeenPwned database leaks using k-Anonymity hashing locally."
+    },
+    {
+      "name": "Queries target URL headers to score security configurations (HSTS, CSP, X-Frame-Options)",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/security/http-headers",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Queries target URL headers to score security configurations (HSTS, CSP, X-Frame-Options)."
+    },
+    {
+      "name": "Extracts and parses text strings from a public PDF document URL",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/media/pdf-text",
+      "method": "POST",
+      "price_usd": "0.050",
+      "description": "Extracts and parses text strings from a public PDF document URL."
+    },
+    {
+      "name": "Performs optical character recognition (OCR) on an image URL to read its text",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/media/ocr",
+      "method": "POST",
+      "price_usd": "0.050",
+      "description": "Performs optical character recognition (OCR) on an image URL to read its text."
+    },
+    {
+      "name": "Generates charts (bar, line, pie) from JSON configuration payloads using QuickChart",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/media/chart",
+      "method": "POST",
+      "price_usd": "0.020",
+      "description": "Generates charts (bar, line, pie) from JSON configuration payloads using QuickChart.io."
+    },
+    {
+      "name": "Generates a QR code image buffer from a text string",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/media/qr-generate",
+      "method": "POST",
+      "price_usd": "0.010",
+      "description": "Generates a QR code image buffer from a text string."
+    },
+    {
+      "name": "Decodes EAN, UPC, or ISBN barcode values from an image URL",
+      "endpoint": "https://codepulse-api.hahavoid0.workers.dev/media/barcode-read",
+      "method": "POST",
+      "price_usd": "0.020",
+      "description": "Decodes EAN, UPC, or ISBN barcode values from an image URL."
+    }
+  ]
+}

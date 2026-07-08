@@ -1,0 +1,2224 @@
+# CodePulse API
+
+Pay-per-call disposable email boxes, SMS verification scraping, certificate transparency logs, whois details, sitemap parsing, HaveIBeenPwned checks, PDF parsing, OCR scanners, QR builders, sitemap readers, package registries, and DNS diagnostics for AI agents, paid for with USDC on Base or Solana.
+
+## Base URL
+
+https://codepulse-api.hahavoid0.workers.dev
+
+## Missing data? Request it (free)
+
+If your agent needs live data this API does not serve yet, POST a free request to `https://codepulse-api.hahavoid0.workers.dev/agent/request-data` describing it — frequently-requested data becomes a real endpoint, usually within days. Wrong or stale results? POST to `https://codepulse-api.hahavoid0.workers.dev/agent/feedback` (free) and it gets fixed with priority. Requesting data directly helps your agent: it exists the next time you need it.
+
+## Authentication and payment
+
+Paid endpoints require x402 payment. Unpaid requests return HTTP 402 Payment Required with standard x402 payment instructions in response headers.
+
+### Option 1: Direct x402 Payment
+- Networks: Base mainnet (eip155:8453) or Solana mainnet (solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp)
+- Asset: USDC — Base 0x833589fcd6edb6e08f4c7c32d4f71b54bda02913, Solana EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+- Facilitator: https://api.cdp.coinbase.com/platform/v2/x402
+- x402 metadata: https://codepulse-api.hahavoid0.workers.dev/.well-known/x402.json
+- OpenAPI schema: https://codepulse-api.hahavoid0.workers.dev/openapi.json
+- Agent card: https://codepulse-api.hahavoid0.workers.dev/.well-known/agent-card.json
+- MCP metadata: https://codepulse-api.hahavoid0.workers.dev/.well-known/mcp.json
+
+### Option 2: Prepaid API Credits (Recommended Fallback)
+If you prefer not to sign on-chain transactions for individual calls, you can generate a prepaid API key:
+1. Send Base USDC to the settlement address: `0x4a82F147c8A4339409C9097Adc1EedFd56E85bFE`.
+2. Call `POST ${baseUrl}/credits/deposit` with your wallet address and the transaction hash:
+   ```json
+   {
+     "txHash": "0x...",
+     "wallet": "0x..."
+   }
+   ```
+3. Receive your `sp_...` API key. Use it via the standard Authorization header:
+   `Authorization: Bearer sp_...`
+
+## Preflight Parameter Validation (Free)
+
+Before submitting a paid request, you can validate your request arguments completely **free** to check for format compatibility (e.g. valid EVM address format, 5-digit ZIP validation, coordinates boundary limits):
+
+POST https://codepulse-api.hahavoid0.workers.dev/preflight
+
+Example Body payload:
+```json
+{
+  "path": "/finance/sales-tax",
+  "body": {
+    "zip_code": "90210"
+  }
+}
+```
+
+Response output:
+```json
+{
+  "valid": true,
+  "error": null
+}
+```
+
+If parameters fail constraints:
+```json
+{
+  "valid": false,
+  "error": "ZIP code must be exactly 5 digits"
+}
+```
+
+Note: The payment gateway middleware will also run these validation checks automatically and return HTTP 400 Bad Request *before* requesting any payment. You will never be charged for invalid requests.
+
+## Agent workflow
+
+1. Pick the narrowest endpoint that matches the user's task from the list below.
+2. Validate required fields client-side before paying; each endpoint documents its required JSON fields.
+3. If using AgentCash, you can discover and check schemas first:
+   - npx agentcash@latest discover https://codepulse-api.hahavoid0.workers.dev
+   - npx agentcash@latest check https://codepulse-api.hahavoid0.workers.dev/web/search
+4. Execute the request with the JSON body shown for that endpoint.
+5. Every response includes a confidence/disclaimer field where relevant (legal, tax, or safety topics) — surface that to the end user, do not present results as certain legal or medical fact.
+
+## Cheapest endpoints for agent tests
+
+The cheapest paid endpoints cost $0.010 USDC:
+
+- /web/metadata: OpenGraph & Metadata Extractor. Use for use when an agent needs to retrieve semantic details or logo urls of a web page.
+- /web/history: Archive.org Wayback Snapshot Query. Use for use when an agent needs to retrieve historical snapshots of websites or verify content changes.
+- /web/rss: RSS/Atom XML Feed Parser. Use for use when an agent needs to parse recent articles or update updates from news feeds.
+- /web/sitemap: Sitemap XML URL Extractor. Use for use when an agent wants to discover all crawlable pages of a target website.
+- /web/dns-txt: Cloudflare DNS Records Query. Use for use verifying domain configuration, email routing mx entries, or safety headers.
+- /mailbox/create: Disposable Mailbox Creator. Use for use when an agent needs a temporary email address to register for web accounts or receive confirmations.
+- /mailbox/messages: Mailbox Message Poller. Use for use when checking for verification links or otp codes sent to the temporary mailbox.
+- /webhook/listen: Temporary Webhook Endpoint Creator. Use for use when an agent needs to receive a callback payload (e.g. oauth code or payment hook).
+- /webhook/poll: Webhook Callback Poller. Use for use to retrieve the payloads (headers, query, body) sent to the callback url.
+- /notify/telegram: Telegram Bot Dispatcher. Use for use when an agent needs to send alerts directly to a user's telegram account.
+- /notify/slack: Slack Webhook Alert Dispatcher. Use for use when notifying engineering or project teams inside slack.
+- /notify/discord: Discord Webhook Relayer. Use for use to dispatch status alerts to a discord server channel.
+- /domain/check: Domain Availability SOA Checker. Use for use when verifying if a target domain is unregistered and available for buy/registration.
+- /brand/palette: Website Official Colors Extractor. Use for use when an agent needs to determine the visual color palette of a company.
+- /brand/logo: Clearbit Corporate Logo Resolver. Use for use to retrieve the icon/logo link for a public business.
+- /network/ssl-expiry: CertSpotter SSL Validity Checker. Use for use when an agent needs to verify if an ssl certificate is active or expiring soon.
+- /network/dnssec: DNSSEC Signatures Verifier. Use for use verifying if a domain is protected against dns spoofing/poisoning.
+- /registry/npm: NPM Library Resolver. Use for use to retrieve the latest version, dependencies, or download tags for an npm package.
+- /registry/pypi: PyPI Package Resolver. Use for use to query pypi library metadata or requirements.
+- /registry/crates: Rust Crates.io Resolver. Use for use to verify rust library registry statuses.
+- /registry/golang: Go Proxy Config Checker. Use for use to verify release modules available on go proxy pipelines.
+- /registry/packagist: PHP Composer Packagist Lookup. Use for use verifying php library versions.
+- /registry/maven: Java Maven Package Resolver. Use for use to retrieve the maven coordinates for a java artifact.
+- /registry/cdnjs: CDNJS File Paths Resolver. Use for use to lookup cdn urls to import libraries in web layouts.
+- /registry/github/repo: GitHub Repository Stats Lookup. Use for use checking repository popularity metrics or health indicators.
+- /registry/github/release: GitHub Tag Release Resolver. Use for use to verify recent version tags and release note details.
+- /registry/github/license: GitHub Repository License Resolver. Use for use when an agent needs to audit open-source license compliance.
+- /security/hash-check: Threat Hash Signatures Lookup. Use for use to audit uploaded file signatures against malware indexes.
+- /security/pwned-password: HaveIBeenPwned Leak Checker. Use for use when confirming if a password is weak and has leaked in past data breaches.
+- /security/http-headers: CSP & HSTS Headers Auditing. Use for use when an agent needs to evaluate website security configuration.
+- /media/qr-generate: Local QR Code Buffer Generator. Use for use to generate scan links for mobile wallet deposits or logins.
+
+To prove the API works as an agent with the smallest spend, discover the origin, check the schema, then call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/calendar/holidays -m POST -b '{"year":2026,"country_code":"US"}' --payment-protocol x402 --payment-network base --max-amount 0.02
+```
+
+## Endpoint: DuckDuckGo Web Search Parser
+
+POST https://codepulse-api.hahavoid0.workers.dev/web/search
+
+Price: $0.020
+
+When to use: Use when an agent needs to perform general web searches without paid keys.
+
+Do not use for: Do not use for low-latency search completions or autocomplete queries.
+
+Request body example:
+
+```json
+{
+  "query": "artificial intelligence news"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "results": [
+      {
+        "title": "Example AI Article",
+        "url": "https://example.com/ai-article",
+        "snippet": "This is a brief description of the AI article."
+      }
+    ]
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/search -m POST -b '{"query":"artificial intelligence news"}'
+```
+
+## Endpoint: Web Scraping Text Extractor
+
+POST https://codepulse-api.hahavoid0.workers.dev/web/scrape
+
+Price: $0.020
+
+When to use: Use when an agent needs to retrieve the main text/article from a web page.
+
+Do not use for: Do not use for downloading binary payloads like images or ZIP archives.
+
+Request body example:
+
+```json
+{
+  "url": "https://example.com"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "text": "Example Domain\nThis domain is for use in illustrative examples..."
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/scrape -m POST -b '{"url":"https://example.com"}'
+```
+
+## Endpoint: HTML to Markdown Downloader
+
+POST https://codepulse-api.hahavoid0.workers.dev/web/markdown
+
+Price: $0.020
+
+When to use: Use when an agent needs a clean markdown rendering of documentation or blogs.
+
+Do not use for: Do not use for parsing dynamic SPA apps requiring JavaScript hydration.
+
+Request body example:
+
+```json
+{
+  "url": "https://example.com"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "markdown": "# Example Domain\n\nThis domain is for use in illustrative examples..."
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/markdown -m POST -b '{"url":"https://example.com"}'
+```
+
+## Endpoint: OpenGraph & Metadata Extractor
+
+POST https://codepulse-api.hahavoid0.workers.dev/web/metadata
+
+Price: $0.010
+
+When to use: Use when an agent needs to retrieve semantic details or logo URLs of a web page.
+
+Do not use for: Do not use for downloading the entire page text content.
+
+Request body example:
+
+```json
+{
+  "url": "https://example.com"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "title": "Example Domain",
+    "description": "Illustrative example domain description",
+    "og": {
+      "title": "Example Domain",
+      "description": "Illustrative description"
+    }
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/metadata -m POST -b '{"url":"https://example.com"}'
+```
+
+## Endpoint: Archive.org Wayback Snapshot Query
+
+POST https://codepulse-api.hahavoid0.workers.dev/web/history
+
+Price: $0.010
+
+When to use: Use when an agent needs to retrieve historical snapshots of websites or verify content changes.
+
+Do not use for: Do not use for real-time live page fetches.
+
+Request body example:
+
+```json
+{
+  "url": "https://example.com"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "available": true,
+    "snapshot_url": "https://web.archive.org/web/20061205213202/http://example.com:80/",
+    "timestamp": "20061205213202"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/history -m POST -b '{"url":"https://example.com"}'
+```
+
+## Endpoint: RSS/Atom XML Feed Parser
+
+POST https://codepulse-api.hahavoid0.workers.dev/web/rss
+
+Price: $0.010
+
+When to use: Use when an agent needs to parse recent articles or update updates from news feeds.
+
+Do not use for: Do not use for downloading binary attachments or scraping images.
+
+Request body example:
+
+```json
+{
+  "url": "https://hnrss.org/frontpage"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "feed": {
+      "title": "Hacker News",
+      "link": "https://news.ycombinator.com/"
+    },
+    "items": [
+      {
+        "title": "Interesting post",
+        "link": "https://example.com/interesting",
+        "pubDate": "2026-06-25T12:00:00Z"
+      }
+    ]
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/rss -m POST -b '{"url":"https://hnrss.org/frontpage"}'
+```
+
+## Endpoint: Sitemap XML URL Extractor
+
+POST https://codepulse-api.hahavoid0.workers.dev/web/sitemap
+
+Price: $0.010
+
+When to use: Use when an agent wants to discover all crawlable pages of a target website.
+
+Do not use for: Do not use for downloading pages text content.
+
+Request body example:
+
+```json
+{
+  "url": "https://example.com/sitemap.xml"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "urls": [
+      "https://example.com/home",
+      "https://example.com/about"
+    ]
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/sitemap -m POST -b '{"url":"https://example.com/sitemap.xml"}'
+```
+
+## Endpoint: Cloudflare DNS Records Query
+
+POST https://codepulse-api.hahavoid0.workers.dev/web/dns-txt
+
+Price: $0.010
+
+When to use: Use verifying domain configuration, email routing MX entries, or safety headers.
+
+Do not use for: Do not use for looking up registry creation timestamps (use /web/whois).
+
+Request body example:
+
+```json
+{
+  "domain": "google.com",
+  "type": "TXT"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "records": [
+      "v=spf1 include:_spf.google.com ~all"
+    ]
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/dns-txt -m POST -b '{"domain":"google.com","type":"TXT"}'
+```
+
+## Endpoint: Public WHOIS/RDAP Domain Query
+
+POST https://codepulse-api.hahavoid0.workers.dev/web/whois
+
+Price: $0.020
+
+When to use: Use checking domain registrar name, expiration timestamp, or creation date.
+
+Do not use for: Do not use for DNS record lookup (use /web/dns-txt).
+
+Request body example:
+
+```json
+{
+  "domain": "google.com"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "registrar": "MarkMonitor Inc.",
+    "created_at": "1997-09-15T04:00:00Z",
+    "expired_at": "2028-09-14T04:00:00Z"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/whois -m POST -b '{"domain":"google.com"}'
+```
+
+## Endpoint: Disposable Mailbox Creator
+
+POST https://codepulse-api.hahavoid0.workers.dev/mailbox/create
+
+Price: $0.010
+
+When to use: Use when an agent needs a temporary email address to register for web accounts or receive confirmations.
+
+Do not use for: Do not use for long-term communications or securing critical accounts.
+
+Request body example:
+
+```json
+{}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "email": "xdf908234@1secmail.com"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/mailbox/create -m POST -b '{}'
+```
+
+## Endpoint: Mailbox Message Poller
+
+POST https://codepulse-api.hahavoid0.workers.dev/mailbox/messages
+
+Price: $0.010
+
+When to use: Use when checking for verification links or OTP codes sent to the temporary mailbox.
+
+Do not use for: Do not use for polling personal or enterprise mail accounts.
+
+Request body example:
+
+```json
+{
+  "email": "xdf908234@1secmail.com"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "messages": [
+      {
+        "id": 1234,
+        "from": "no-reply@github.com",
+        "subject": "Verification Code",
+        "date": "2026-06-25 12:00:00",
+        "body": "Your code is 884732"
+      }
+    ]
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/mailbox/messages -m POST -b '{"email":"xdf908234@1secmail.com"}'
+```
+
+## Endpoint: Temporary Public SMS Numbers
+
+POST https://codepulse-api.hahavoid0.workers.dev/phone/temp-sms
+
+Price: $0.020
+
+When to use: Use when an agent needs a public number to register or verify accounts via SMS.
+
+Do not use for: Do not use for two-factor authentication on secure personal or financial profiles.
+
+Request body example:
+
+```json
+{}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "numbers": [
+      {
+        "country": "United States",
+        "number": "+19142880099",
+        "provider": "receivesms"
+      }
+    ]
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/phone/temp-sms -m POST -b '{}'
+```
+
+## Endpoint: SMS Message Poller
+
+POST https://codepulse-api.hahavoid0.workers.dev/phone/messages
+
+Price: $0.020
+
+When to use: Use to retrieve the OTP verification code sent to the public number.
+
+Do not use for: Do not use for polling private personal phone numbers.
+
+Request body example:
+
+```json
+{
+  "phone": "+12134567890"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "messages": [
+      {
+        "from": "Google",
+        "text": "G-123456 is your verification code.",
+        "date": "1 min ago"
+      }
+    ]
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/phone/messages -m POST -b '{"phone":"+12134567890"}'
+```
+
+## Endpoint: Temporary Webhook Endpoint Creator
+
+POST https://codepulse-api.hahavoid0.workers.dev/webhook/listen
+
+Price: $0.010
+
+When to use: Use when an agent needs to receive a callback payload (e.g. OAuth code or payment hook).
+
+Do not use for: Do not use for high-throughput messaging or persistent API routing.
+
+Request body example:
+
+```json
+{}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "webhook_id": "wh_38f2a28189c4",
+    "callback_url": "https://codepulse-api.hahavoid0.workers.dev/webhook-callback/wh_38f2a28189c4"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/webhook/listen -m POST -b '{}'
+```
+
+## Endpoint: Webhook Callback Poller
+
+POST https://codepulse-api.hahavoid0.workers.dev/webhook/poll
+
+Price: $0.010
+
+When to use: Use to retrieve the payloads (headers, query, body) sent to the callback URL.
+
+Do not use for: Do not use for persistent real-time streaming.
+
+Request body example:
+
+```json
+{
+  "webhook_id": "wh_38f2a28189c4"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "callbacks": [
+      {
+        "timestamp": "2026-06-25T12:00:00Z",
+        "method": "POST",
+        "headers": {},
+        "query": {},
+        "body": {
+          "code": "oauth_code_123"
+        }
+      }
+    ]
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/webhook/poll -m POST -b '{"webhook_id":"wh_38f2a28189c4"}'
+```
+
+## Endpoint: Telegram Bot Dispatcher
+
+POST https://codepulse-api.hahavoid0.workers.dev/notify/telegram
+
+Price: $0.010
+
+When to use: Use when an agent needs to send alerts directly to a user's Telegram account.
+
+Do not use for: Do not use for streaming high-frequency log lines.
+
+Request body example:
+
+```json
+{
+  "bot_token": "BOT_TOKEN",
+  "chat_id": "CHAT_ID",
+  "message": "Alert! Task has completed."
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "success": true,
+    "messageId": 99482
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/notify/telegram -m POST -b '{"bot_token":"BOT_TOKEN","chat_id":"CHAT_ID","message":"Alert! Task has completed."}'
+```
+
+## Endpoint: Slack Webhook Alert Dispatcher
+
+POST https://codepulse-api.hahavoid0.workers.dev/notify/slack
+
+Price: $0.010
+
+When to use: Use when notifying engineering or project teams inside Slack.
+
+Do not use for: Do not use for interactive Slack app commands.
+
+Request body example:
+
+```json
+{
+  "webhook_url": "https://hooks.slack.com/services/...",
+  "text": "Deploy complete."
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "success": true
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/notify/slack -m POST -b '{"webhook_url":"https://hooks.slack.com/services/...","text":"Deploy complete."}'
+```
+
+## Endpoint: Discord Webhook Relayer
+
+POST https://codepulse-api.hahavoid0.workers.dev/notify/discord
+
+Price: $0.010
+
+When to use: Use to dispatch status alerts to a Discord server channel.
+
+Do not use for: Do not use for building interactive Discord slash command bots.
+
+Request body example:
+
+```json
+{
+  "webhook_url": "https://discord.com/api/webhooks/...",
+  "content": "Alert: balance low!"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "success": true
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/notify/discord -m POST -b '{"webhook_url":"https://discord.com/api/webhooks/...","content":"Alert: balance low!"}'
+```
+
+## Endpoint: Resend Free Email Dispatcher
+
+POST https://codepulse-api.hahavoid0.workers.dev/notify/email
+
+Price: $0.020
+
+When to use: Use to send verification codes or summaries directly to a user's inbox.
+
+Do not use for: Do not use for high-volume email newsletter marketing.
+
+Request body example:
+
+```json
+{
+  "to": "user@example.com",
+  "subject": "Hello",
+  "body": "Hello from agent!"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "success": true,
+    "emailId": "id_123"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/notify/email -m POST -b '{"to":"user@example.com","subject":"Hello","body":"Hello from agent!"}'
+```
+
+## Endpoint: Domain Availability SOA Checker
+
+POST https://codepulse-api.hahavoid0.workers.dev/domain/check
+
+Price: $0.010
+
+When to use: Use when verifying if a target domain is unregistered and available for buy/registration.
+
+Do not use for: Do not use for buying domain names directly.
+
+Request body example:
+
+```json
+{
+  "domain": "unregistered12345domain.net"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "domain": "unregistered12345domain.net",
+    "available": true
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/domain/check -m POST -b '{"domain":"unregistered12345domain.net"}'
+```
+
+## Endpoint: Social Profile Handle Checker
+
+POST https://codepulse-api.hahavoid0.workers.dev/domain/social
+
+Price: $0.020
+
+When to use: Use to verify brand username consistency across social channels.
+
+Do not use for: Do not use for claiming or registering handles.
+
+Request body example:
+
+```json
+{
+  "handle": "github"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "handle": "github",
+    "profiles": {
+      "github": {
+        "registered": true,
+        "url": "https://github.com/github"
+      }
+    }
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/domain/social -m POST -b '{"handle":"github"}'
+```
+
+## Endpoint: Website Official Colors Extractor
+
+POST https://codepulse-api.hahavoid0.workers.dev/brand/palette
+
+Price: $0.010
+
+When to use: Use when an agent needs to determine the visual color palette of a company.
+
+Do not use for: Do not use for downloading images or vector logo assets.
+
+Request body example:
+
+```json
+{
+  "url": "https://example.com"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "colors": [
+      "#38bdf8",
+      "#0f172a"
+    ]
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/brand/palette -m POST -b '{"url":"https://example.com"}'
+```
+
+## Endpoint: Clearbit Corporate Logo Resolver
+
+POST https://codepulse-api.hahavoid0.workers.dev/brand/logo
+
+Price: $0.010
+
+When to use: Use to retrieve the icon/logo link for a public business.
+
+Do not use for: Do not use for downloading vector source formats (.ai, .eps).
+
+Request body example:
+
+```json
+{
+  "domain": "stripe.com"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "logo": "https://logo.clearbit.com/stripe.com"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/brand/logo -m POST -b '{"domain":"stripe.com"}'
+```
+
+## Endpoint: CertSpotter SSL Validity Checker
+
+POST https://codepulse-api.hahavoid0.workers.dev/network/ssl-expiry
+
+Price: $0.010
+
+When to use: Use when an agent needs to verify if an SSL certificate is active or expiring soon.
+
+Do not use for: Do not use for debugging local routing certificate parameters.
+
+Request body example:
+
+```json
+{
+  "domain": "google.com"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "valid": true,
+    "not_after": "2026-09-12T12:00:00Z",
+    "issuer": "Google Trust Services"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/network/ssl-expiry -m POST -b '{"domain":"google.com"}'
+```
+
+## Endpoint: DNSSEC Signatures Verifier
+
+POST https://codepulse-api.hahavoid0.workers.dev/network/dnssec
+
+Price: $0.010
+
+When to use: Use verifying if a domain is protected against DNS spoofing/poisoning.
+
+Do not use for: Do not use for configuring DNSSEC records.
+
+Request body example:
+
+```json
+{
+  "domain": "cloudflare.com"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "dnssec_active": true,
+    "keys": [
+      "257 3 13 ..."
+    ]
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/network/dnssec -m POST -b '{"domain":"cloudflare.com"}'
+```
+
+## Endpoint: USPTO Official Patent Lookup
+
+POST https://codepulse-api.hahavoid0.workers.dev/intellectual-property/patent
+
+Price: $0.050
+
+When to use: Use to retrieve filing dates, abstracts, and inventor details of a patent.
+
+Do not use for: Do not use for filing intellectual property applications.
+
+Request body example:
+
+```json
+{
+  "query": "10000000"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "patent_number": "10000000",
+    "title": "Method of processing signals",
+    "inventor": "John Doe",
+    "date": "2018-06-19"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/intellectual-property/patent -m POST -b '{"query":"10000000"}'
+```
+
+## Endpoint: Trademark Index Search
+
+POST https://codepulse-api.hahavoid0.workers.dev/intellectual-property/trademark
+
+Price: $0.050
+
+When to use: Use to verify potential conflicts prior to registering a business brand name.
+
+Do not use for: Do not use as a definitive legal trademark clearance audit.
+
+Request body example:
+
+```json
+{
+  "name": "Apple"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "name": "Apple",
+    "conflicts": true,
+    "matches": [
+      {
+        "mark": "APPLE",
+        "owner": "Apple Inc."
+      }
+    ]
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/intellectual-property/trademark -m POST -b '{"name":"Apple"}'
+```
+
+## Endpoint: SEC EDGAR Filings Lookup
+
+POST https://codepulse-api.hahavoid0.workers.dev/company/sec
+
+Price: $0.050
+
+When to use: Use to retrieve the list of recent filings and regulatory documents submitted by a public company.
+
+Do not use for: Do not use for fetching live daily stock ticker indices.
+
+Request body example:
+
+```json
+{
+  "cik": "0000320193"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "cik": "0000320193",
+    "recent_filings": [
+      {
+        "accessionNumber": "0000320193-26-000010",
+        "form": "10-Q",
+        "filingDate": "2026-05-01",
+        "description": "Quarterly Report"
+      }
+    ]
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/company/sec -m POST -b '{"cik":"0000320193"}'
+```
+
+## Endpoint: SEC Corporate Address Resolver
+
+POST https://codepulse-api.hahavoid0.workers.dev/company/address
+
+Price: $0.020
+
+When to use: Use verifying a public company's official registered headquarters address.
+
+Do not use for: Do not use for retail office locator paths.
+
+Request body example:
+
+```json
+{
+  "cik": "0000320193"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "street1": "ONE APPLE PARK WAY",
+    "city": "CUPERTINO",
+    "state": "CA",
+    "zip": "95014"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/company/address -m POST -b '{"cik":"0000320193"}'
+```
+
+## Endpoint: NPM Library Resolver
+
+POST https://codepulse-api.hahavoid0.workers.dev/registry/npm
+
+Price: $0.010
+
+When to use: Use to retrieve the latest version, dependencies, or download tags for an NPM package.
+
+Do not use for: Do not use for downloading package tarball streams.
+
+Request body example:
+
+```json
+{
+  "package": "hono"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "version": "4.0.0",
+    "description": "Hono framework"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/npm -m POST -b '{"package":"hono"}'
+```
+
+## Endpoint: PyPI Package Resolver
+
+POST https://codepulse-api.hahavoid0.workers.dev/registry/pypi
+
+Price: $0.010
+
+When to use: Use to query PyPI library metadata or requirements.
+
+Do not use for: Do not use for executing python scripts.
+
+Request body example:
+
+```json
+{
+  "package": "requests"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "version": "2.31.0",
+    "author": "Kenneth Reitz"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/pypi -m POST -b '{"package":"requests"}'
+```
+
+## Endpoint: Rust Crates.io Resolver
+
+POST https://codepulse-api.hahavoid0.workers.dev/registry/crates
+
+Price: $0.010
+
+When to use: Use to verify Rust library registry statuses.
+
+Do not use for: Do not use for running cargo commands.
+
+Request body example:
+
+```json
+{
+  "crate": "tokio"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "crate": "tokio",
+    "version": "1.35.1",
+    "downloads": 10000000
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/crates -m POST -b '{"crate":"tokio"}'
+```
+
+## Endpoint: Go Proxy Config Checker
+
+POST https://codepulse-api.hahavoid0.workers.dev/registry/golang
+
+Price: $0.010
+
+When to use: Use to verify release modules available on Go proxy pipelines.
+
+Do not use for: Do not use for executing go build commands.
+
+Request body example:
+
+```json
+{
+  "module": "github.com/gin-gonic/gin"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "module": "github.com/gin-gonic/gin",
+    "versions": [
+      "v1.9.1"
+    ]
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/golang -m POST -b '{"module":"github.com/gin-gonic/gin"}'
+```
+
+## Endpoint: PHP Composer Packagist Lookup
+
+POST https://codepulse-api.hahavoid0.workers.dev/registry/packagist
+
+Price: $0.010
+
+When to use: Use verifying PHP library versions.
+
+Do not use for: Do not use for downloading composer payloads.
+
+Request body example:
+
+```json
+{
+  "package": "monolog/monolog"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "package": "monolog/monolog",
+    "downloads": 50000000
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/packagist -m POST -b '{"package":"monolog/monolog"}'
+```
+
+## Endpoint: Java Maven Package Resolver
+
+POST https://codepulse-api.hahavoid0.workers.dev/registry/maven
+
+Price: $0.010
+
+When to use: Use to retrieve the Maven coordinates for a Java artifact.
+
+Do not use for: Do not use for executing jar targets.
+
+Request body example:
+
+```json
+{
+  "artifact": "log4j"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "group": "log4j",
+    "artifact": "log4j",
+    "version": "1.2.17"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/maven -m POST -b '{"artifact":"log4j"}'
+```
+
+## Endpoint: CDNJS File Paths Resolver
+
+POST https://codepulse-api.hahavoid0.workers.dev/registry/cdnjs
+
+Price: $0.010
+
+When to use: Use to lookup CDN urls to import libraries in web layouts.
+
+Do not use for: Do not use for downloading source code locally.
+
+Request body example:
+
+```json
+{
+  "library": "react"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "library": "react",
+    "filename": "umd/react.production.min.js"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/cdnjs -m POST -b '{"library":"react"}'
+```
+
+## Endpoint: GitHub Repository Stats Lookup
+
+POST https://codepulse-api.hahavoid0.workers.dev/registry/github/repo
+
+Price: $0.010
+
+When to use: Use checking repository popularity metrics or health indicators.
+
+Do not use for: Do not use for cloning git files.
+
+Request body example:
+
+```json
+{
+  "repo": "honojs/hono"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "stars": 15000,
+    "open_issues": 100
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/github/repo -m POST -b '{"repo":"honojs/hono"}'
+```
+
+## Endpoint: GitHub Tag Release Resolver
+
+POST https://codepulse-api.hahavoid0.workers.dev/registry/github/release
+
+Price: $0.010
+
+When to use: Use to verify recent version tags and release note details.
+
+Do not use for: Do not use for downloading binary releases.
+
+Request body example:
+
+```json
+{
+  "repo": "honojs/hono"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "tag_name": "v4.0.0",
+    "name": "Version 4 Release"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/github/release -m POST -b '{"repo":"honojs/hono"}'
+```
+
+## Endpoint: GitHub Repository License Resolver
+
+POST https://codepulse-api.hahavoid0.workers.dev/registry/github/license
+
+Price: $0.010
+
+When to use: Use when an agent needs to audit open-source license compliance.
+
+Do not use for: Do not use for legal licensing clearances.
+
+Request body example:
+
+```json
+{
+  "repo": "honojs/hono"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "license": "MIT"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/github/license -m POST -b '{"repo":"honojs/hono"}'
+```
+
+## Endpoint: Regex Private Key Scanner
+
+POST https://codepulse-api.hahavoid0.workers.dev/security/secret-scan
+
+Price: $0.030
+
+When to use: Use to audit source code or logs before pushing to public repositories.
+
+Do not use for: Do not use for generating keys or passwords.
+
+Request body example:
+
+```json
+{
+  "text": "My database string is mysql://root:secret@localhost"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "found": true,
+    "leaks": [
+      {
+        "type": "Database credentials",
+        "match": "mysql://root:secret"
+      }
+    ]
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/security/secret-scan -m POST -b '{"text":"My database string is mysql://root:secret@localhost"}'
+```
+
+## Endpoint: OSV.dev CVE Library Vulnerabilities Checker
+
+POST https://codepulse-api.hahavoid0.workers.dev/security/cve
+
+Price: $0.020
+
+When to use: Use to audit dependency trees for registered vulnerability risks.
+
+Do not use for: Do not use for downloading binary patch updates.
+
+Request body example:
+
+```json
+{
+  "package": "lodash",
+  "version": "4.17.15",
+  "ecosystem": "npm"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "vulnerable": true,
+    "cves": [
+      "GHSA-48tx-fdd9-839e"
+    ]
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/security/cve -m POST -b '{"package":"lodash","version":"4.17.15","ecosystem":"npm"}'
+```
+
+## Endpoint: AbuseIPDB IP Reputation Query
+
+POST https://codepulse-api.hahavoid0.workers.dev/security/ip-abuse
+
+Price: $0.020
+
+When to use: Use to verify client IP quality or blocking malicious traffic.
+
+Do not use for: Do not use for geolocating IPs (use /network/ip-lookup).
+
+Request body example:
+
+```json
+{
+  "ip": "127.0.0.1"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "ip": "127.0.0.1",
+    "abuseScore": 0
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/security/ip-abuse -m POST -b '{"ip":"127.0.0.1"}'
+```
+
+## Endpoint: Threat Hash Signatures Lookup
+
+POST https://codepulse-api.hahavoid0.workers.dev/security/hash-check
+
+Price: $0.010
+
+When to use: Use to audit uploaded file signatures against malware indexes.
+
+Do not use for: Do not use for downloading file payloads.
+
+Request body example:
+
+```json
+{
+  "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "hash": "e3b0c442...",
+    "clean": true
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/security/hash-check -m POST -b '{"hash":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}'
+```
+
+## Endpoint: HaveIBeenPwned Leak Checker
+
+POST https://codepulse-api.hahavoid0.workers.dev/security/pwned-password
+
+Price: $0.010
+
+When to use: Use when confirming if a password is weak and has leaked in past data breaches.
+
+Do not use for: Do not use for checking personal email lists (use /security/secret-scan).
+
+Request body example:
+
+```json
+{
+  "password": "password123"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "pwned": true,
+    "count": 839482
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/security/pwned-password -m POST -b '{"password":"password123"}'
+```
+
+## Endpoint: CSP & HSTS Headers Auditing
+
+POST https://codepulse-api.hahavoid0.workers.dev/security/http-headers
+
+Price: $0.010
+
+When to use: Use when an agent needs to evaluate website security configuration.
+
+Do not use for: Do not use for downloading entire site pages text content.
+
+Request body example:
+
+```json
+{
+  "url": "https://google.com"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "score": 80,
+    "headers": {
+      "hsts": true,
+      "csp": false
+    }
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/security/http-headers -m POST -b '{"url":"https://google.com"}'
+```
+
+## Endpoint: Local PDF Text Extractor
+
+POST https://codepulse-api.hahavoid0.workers.dev/media/pdf-text
+
+Price: $0.050
+
+When to use: Use to read the textual contents of invoices, whitepapers, or manuals in PDF format.
+
+Do not use for: Do not use for scanned PDF images requiring OCR (use /media/ocr).
+
+Request body example:
+
+```json
+{
+  "url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "text": "Dummy PDF file"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/media/pdf-text -m POST -b '{"url":"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"}'
+```
+
+## Endpoint: OCR.space Image Text Reader
+
+POST https://codepulse-api.hahavoid0.workers.dev/media/ocr
+
+Price: $0.050
+
+When to use: Use to extract text from screenshots, scanned receipts, or product labels.
+
+Do not use for: Do not use for parsing clean text documents (use /web/scrape).
+
+Request body example:
+
+```json
+{
+  "image_url": "https://i.imgur.com/example.png"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "text": "Extracted receipt content..."
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/media/ocr -m POST -b '{"image_url":"https://i.imgur.com/example.png"}'
+```
+
+## Endpoint: QuickChart.io Visual Generator
+
+POST https://codepulse-api.hahavoid0.workers.dev/media/chart
+
+Price: $0.020
+
+When to use: Use when an agent needs to generate graphical dashboard reports or trends diagrams.
+
+Do not use for: Do not use for downloading spreadsheet CSV datasets.
+
+Request body example:
+
+```json
+{
+  "chart_config": {
+    "type": "bar",
+    "data": {
+      "labels": [
+        "Q1",
+        "Q2"
+      ],
+      "datasets": [
+        {
+          "label": "Sales",
+          "data": [
+            100,
+            200
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "chart_url": "https://quickchart.io/chart?c=..."
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/media/chart -m POST -b '{"chart_config":{"type":"bar","data":{"labels":["Q1","Q2"],"datasets":[{"label":"Sales","data":[100,200]}]}}}'
+```
+
+## Endpoint: Local QR Code Buffer Generator
+
+POST https://codepulse-api.hahavoid0.workers.dev/media/qr-generate
+
+Price: $0.010
+
+When to use: Use to generate scan links for mobile wallet deposits or logins.
+
+Do not use for: Do not use for reading QR code images (use scanner).
+
+Request body example:
+
+```json
+{
+  "text": "https://codepulse-api.hahavoid0.workers.dev"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "qr_url": "https://api.qrserver.com/..."
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/media/qr-generate -m POST -b '{"text":"https://codepulse-api.hahavoid0.workers.dev"}'
+```
+
+## Endpoint: Barcode Image Parity Decoder
+
+POST https://codepulse-api.hahavoid0.workers.dev/media/barcode-read
+
+Price: $0.020
+
+When to use: Use to resolve a physical product barcode image into a barcode string.
+
+Do not use for: Do not use for auditing patent numbers (use /intellectual-property/patent).
+
+Request body example:
+
+```json
+{
+  "image_url": "https://i.imgur.com/example-barcode.png"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "found": true,
+    "barcode": "9780140449136",
+    "format": "EAN_13"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/media/barcode-read -m POST -b '{"image_url":"https://i.imgur.com/example-barcode.png"}'
+```
+
