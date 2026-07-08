@@ -58,3 +58,7 @@ deploy.mjs
 package*.json
 tsconfig.json
 server.json
+
+# Development Playbooks
+AGENTIC_API_DEVELOPMENT_PLAYBOOK.md
+codepulse_api_endpoints_plan.md
