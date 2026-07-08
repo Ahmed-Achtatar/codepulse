@@ -64,28 +64,15 @@ npx agentcash@latest fetch https://codepulse.dev/web/search-preflight -m POST -b
 npx agentcash@latest fetch https://codepulse.dev/web/search -m POST -b '{"q": "Cloudflare Workers"}'
 ```
 
-## 📂 Repository Structure
+## 📂 Repository Contents
 
-- `src/index.ts` - Main Hono application, OpenAPI generation, A2A routing, and Analytics.
-- `src/html.ts` - The gorgeous, glassmorphism-styled landing page UI.
-- `src/middleware/rate-limit.ts` - Cloudflare KV Token Bucket rate limiter.
-- `src/endpoints/` - All 50+ deterministic logic endpoints (Web, Media, DevTools, Discovery, etc.).
-- `.github/workflows/` - Daily automated health checks and agent directory pinging (M2M discoverability).
+This repository serves as the public metadata and discovery index for CodePulse. It does not contain the proprietary backend execution logic.
 
-## 🚀 Deployment
-
-CodePulse runs on Cloudflare Workers.
-
-```bash
-# Install dependencies
-npm install
-
-# Run locally
-npm run dev
-
-# Deploy to Cloudflare
-npm run deploy
-```
+- `openapi.json` - The complete OpenAPI 3.1.0 specification with x402 pricing extensions.
+- `llms.txt` - LLM-optimized documentation for AI agents to learn how to integrate the API.
+- `marketplace-listing.json` - Registration payload for Agentic directories.
+- `x402-live.json` - Live endpoint status and pricing definitions.
+- `.github/workflows/` - Automated workflows that continuously ping agent discovery networks to maintain SEO ranking.
 
 ## 📖 OpenAPI & Discovery
 
