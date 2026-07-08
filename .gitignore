@@ -40,3 +40,21 @@ wrangler-dev.out.log
 .DS_Store
 Thumbs.db
 bazaar-recon-report.md
+
+# Proprietary / Execution Code
+src/
+buyer/
+contracts/
+mcp-server/
+scripts/
+
+# Setup & Tests
+setup*
+test*
+
+# Deployment & Config
+wrangler.toml
+deploy.mjs
+package*.json
+tsconfig.json
+server.json
