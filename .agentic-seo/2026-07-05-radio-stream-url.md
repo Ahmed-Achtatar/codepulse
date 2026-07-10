@@ -7,7 +7,7 @@ Enter the `/radio/stream-url` endpoint. It’s the missing link for AI agents th
 ---
 
 ## Why Your AI Agent Needs Live Radio Data
-Autonomous agents are evolving from text-processors to multimodal listeners. By integrating the **StatePulse API**, your agent can resolve direct Shoutcast/Icecast streaming URLs from an open-source database.
+Autonomous agents are evolving from text-processors to multimodal listeners. By integrating the **CodePulse API**, your agent can resolve direct Shoutcast/Icecast streaming URLs from an open-source database.
 
 *   **Real-time Sentiment Analysis:** Feed audio streams into a transcription model (like Whisper) to analyze local public opinion.
 *   **Geopolitical Monitoring:** Use tags to isolate "news" radio in specific regions for instant intelligence.
@@ -36,7 +36,7 @@ Your agent uses `agentcash` to sign transactions for every request, ensuring zer
 If you are testing the stream resolution via your terminal or an MCP tool definition:
 
 ```bash
-curl -X POST https://statepulse-api.hahavoid0.workers.dev/radio/stream-url \
+curl -X POST https://codepulse-api.hahavoid0.workers.dev/radio/stream-url \
      -H "Content-Type: application/json" \
      -d '{"country": "Morocco", "genre": "news"}'
 ```
@@ -49,7 +49,7 @@ import requests
 from agentcash import AgentWallet # Hypothetical SDK usage
 
 wallet = AgentWallet()
-url = "https://statepulse-api.hahavoid0.workers.dev/radio/stream-url"
+url = "https://codepulse-api.hahavoid0.workers.dev/radio/stream-url"
 payload = {"country": "Morocco", "genre": "news"}
 
 # The SDK automatically handles the 402 Payment Required handshake
@@ -71,4 +71,4 @@ else:
 
 **Stop building agents that only read. Start building agents that listen.** 
 
-*Check out the [StatePulse API Documentation](https://statepulse-api.hahavoid0.workers.dev/) to integrate your first audio stream today.*
+*Check out the [CodePulse API Documentation](https://codepulse-api.hahavoid0.workers.dev/) to integrate your first audio stream today.*

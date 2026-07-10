@@ -1,14 +1,14 @@
-# CodePulse API
+# CodePulse Agentic API
 
-Pay-per-call disposable email boxes, SMS verification scraping, certificate transparency logs, whois details, sitemap parsing, HaveIBeenPwned checks, PDF parsing, OCR scanners, QR builders, sitemap readers, package registries, and DNS diagnostics for AI agents, paid for with USDC on Base or Solana.
+The premier developer tool suite built natively for AI agents. Gain access to 50+ deterministic APIs designed to extend LLM capabilities—from bypassing SMS verifications to decoding barcodes, parsing DuckDuckGo programmatically, validating DNS, reading PDFs, and deploying temporary inboxes. Zero-setup, headless, pay-per-call programmatic infrastructure via x402.
 
 ## Base URL
 
-https://codepulse-api.hahavoid0.workers.dev
+http://localhost:8787
 
 ## Missing data? Request it (free)
 
-If your agent needs live data this API does not serve yet, POST a free request to `https://codepulse-api.hahavoid0.workers.dev/agent/request-data` describing it — frequently-requested data becomes a real endpoint, usually within days. Wrong or stale results? POST to `https://codepulse-api.hahavoid0.workers.dev/agent/feedback` (free) and it gets fixed with priority. Requesting data directly helps your agent: it exists the next time you need it.
+If your agent needs live data this API does not serve yet, POST a free request to `http://localhost:8787/agent/request-data` describing it — frequently-requested data becomes a real endpoint, usually within days. Wrong or stale results? POST to `http://localhost:8787/agent/feedback` (free) and it gets fixed with priority. Requesting data directly helps your agent: it exists the next time you need it.
 
 ## Authentication and payment
 
@@ -18,10 +18,10 @@ Paid endpoints require x402 payment. Unpaid requests return HTTP 402 Payment Req
 - Networks: Base mainnet (eip155:8453) or Solana mainnet (solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp)
 - Asset: USDC — Base 0x833589fcd6edb6e08f4c7c32d4f71b54bda02913, Solana EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
 - Facilitator: https://api.cdp.coinbase.com/platform/v2/x402
-- x402 metadata: https://codepulse-api.hahavoid0.workers.dev/.well-known/x402.json
-- OpenAPI schema: https://codepulse-api.hahavoid0.workers.dev/openapi.json
-- Agent card: https://codepulse-api.hahavoid0.workers.dev/.well-known/agent-card.json
-- MCP metadata: https://codepulse-api.hahavoid0.workers.dev/.well-known/mcp.json
+- x402 metadata: http://localhost:8787/.well-known/x402.json
+- OpenAPI schema: http://localhost:8787/openapi.json
+- Agent card: http://localhost:8787/.well-known/agent-card.json
+- MCP metadata: http://localhost:8787/.well-known/mcp.json
 
 ### Option 2: Prepaid API Credits (Recommended Fallback)
 If you prefer not to sign on-chain transactions for individual calls, you can generate a prepaid API key:
@@ -40,7 +40,7 @@ If you prefer not to sign on-chain transactions for individual calls, you can ge
 
 Before submitting a paid request, you can validate your request arguments completely **free** to check for format compatibility (e.g. valid EVM address format, 5-digit ZIP validation, coordinates boundary limits):
 
-POST https://codepulse-api.hahavoid0.workers.dev/preflight
+POST http://localhost:8787/preflight
 
 Example Body payload:
 ```json
@@ -75,8 +75,8 @@ Note: The payment gateway middleware will also run these validation checks autom
 1. Pick the narrowest endpoint that matches the user's task from the list below.
 2. Validate required fields client-side before paying; each endpoint documents its required JSON fields.
 3. If using AgentCash, you can discover and check schemas first:
-   - npx agentcash@latest discover https://codepulse-api.hahavoid0.workers.dev
-   - npx agentcash@latest check https://codepulse-api.hahavoid0.workers.dev/web/search
+   - npx agentcash@latest discover http://localhost:8787
+   - npx agentcash@latest check http://localhost:8787/web/search
 4. Execute the request with the JSON body shown for that endpoint.
 5. Every response includes a confidence/disclaimer field where relevant (legal, tax, or safety topics) — surface that to the end user, do not present results as certain legal or medical fact.
 
@@ -84,49 +84,19 @@ Note: The payment gateway middleware will also run these validation checks autom
 
 The cheapest paid endpoints cost $0.010 USDC:
 
-- /web/metadata: OpenGraph & Metadata Extractor. Use for use when an agent needs to retrieve semantic details or logo urls of a web page.
-- /web/history: Archive.org Wayback Snapshot Query. Use for use when an agent needs to retrieve historical snapshots of websites or verify content changes.
-- /web/rss: RSS/Atom XML Feed Parser. Use for use when an agent needs to parse recent articles or update updates from news feeds.
-- /web/sitemap: Sitemap XML URL Extractor. Use for use when an agent wants to discover all crawlable pages of a target website.
-- /web/dns-txt: Cloudflare DNS Records Query. Use for use verifying domain configuration, email routing mx entries, or safety headers.
-- /mailbox/create: Disposable Mailbox Creator. Use for use when an agent needs a temporary email address to register for web accounts or receive confirmations.
-- /mailbox/messages: Mailbox Message Poller. Use for use when checking for verification links or otp codes sent to the temporary mailbox.
-- /webhook/listen: Temporary Webhook Endpoint Creator. Use for use when an agent needs to receive a callback payload (e.g. oauth code or payment hook).
-- /webhook/poll: Webhook Callback Poller. Use for use to retrieve the payloads (headers, query, body) sent to the callback url.
-- /notify/telegram: Telegram Bot Dispatcher. Use for use when an agent needs to send alerts directly to a user's telegram account.
-- /notify/slack: Slack Webhook Alert Dispatcher. Use for use when notifying engineering or project teams inside slack.
-- /notify/discord: Discord Webhook Relayer. Use for use to dispatch status alerts to a discord server channel.
-- /domain/check: Domain Availability SOA Checker. Use for use when verifying if a target domain is unregistered and available for buy/registration.
-- /brand/palette: Website Official Colors Extractor. Use for use when an agent needs to determine the visual color palette of a company.
-- /brand/logo: Clearbit Corporate Logo Resolver. Use for use to retrieve the icon/logo link for a public business.
-- /network/ssl-expiry: CertSpotter SSL Validity Checker. Use for use when an agent needs to verify if an ssl certificate is active or expiring soon.
-- /network/dnssec: DNSSEC Signatures Verifier. Use for use verifying if a domain is protected against dns spoofing/poisoning.
 - /registry/npm: NPM Library Resolver. Use for use to retrieve the latest version, dependencies, or download tags for an npm package.
-- /registry/pypi: PyPI Package Resolver. Use for use to query pypi library metadata or requirements.
-- /registry/crates: Rust Crates.io Resolver. Use for use to verify rust library registry statuses.
-- /registry/golang: Go Proxy Config Checker. Use for use to verify release modules available on go proxy pipelines.
-- /registry/packagist: PHP Composer Packagist Lookup. Use for use verifying php library versions.
-- /registry/maven: Java Maven Package Resolver. Use for use to retrieve the maven coordinates for a java artifact.
-- /registry/cdnjs: CDNJS File Paths Resolver. Use for use to lookup cdn urls to import libraries in web layouts.
-- /registry/github/repo: GitHub Repository Stats Lookup. Use for use checking repository popularity metrics or health indicators.
-- /registry/github/release: GitHub Tag Release Resolver. Use for use to verify recent version tags and release note details.
-- /registry/github/license: GitHub Repository License Resolver. Use for use when an agent needs to audit open-source license compliance.
-- /security/hash-check: Threat Hash Signatures Lookup. Use for use to audit uploaded file signatures against malware indexes.
-- /security/pwned-password: HaveIBeenPwned Leak Checker. Use for use when confirming if a password is weak and has leaked in past data breaches.
-- /security/http-headers: CSP & HSTS Headers Auditing. Use for use when an agent needs to evaluate website security configuration.
-- /media/qr-generate: Local QR Code Buffer Generator. Use for use to generate scan links for mobile wallet deposits or logins.
 
 To prove the API works as an agent with the smallest spend, discover the origin, check the schema, then call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/calendar/holidays -m POST -b '{"year":2026,"country_code":"US"}' --payment-protocol x402 --payment-network base --max-amount 0.02
+npx agentcash@latest fetch http://localhost:8787/calendar/holidays -m POST -b '{"year":2026,"country_code":"US"}' --payment-protocol x402 --payment-network base --max-amount 0.02
 ```
 
 ## Endpoint: DuckDuckGo Web Search Parser
 
-POST https://codepulse-api.hahavoid0.workers.dev/web/search
+POST http://localhost:8787/web/search
 
-Price: $0.020
+Price: $0.030
 
 When to use: Use when an agent needs to perform general web searches without paid keys.
 
@@ -164,14 +134,48 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/search -m POST -b '{"query":"artificial intelligence news"}'
+npx agentcash@latest fetch http://localhost:8787/web/search -m POST -b '{"query":"artificial intelligence news"}'
+```
+
+## Endpoint: Web Search (Free Preflight)
+
+POST http://localhost:8787/web/search-preflight
+
+Price: free
+
+When to use: When you want to verify search parameters before paying for the actual results.
+
+Do not use for: Getting actual search results.
+
+Request body example:
+
+```json
+{
+  "q": "Cloudflare Workers KV"
+}
+```
+
+Response example:
+
+```json
+{
+  "available": true,
+  "estimated_results": "10+",
+  "next_action": "npx agentcash@latest fetch https://api.codepulse.com/web/search -m POST -b '{\"q\":\"Cloudflare Workers KV\"}'"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch http://localhost:8787/web/search-preflight -m POST -b '{"q":"Cloudflare Workers KV"}'
 ```
 
 ## Endpoint: Web Scraping Text Extractor
 
-POST https://codepulse-api.hahavoid0.workers.dev/web/scrape
+POST http://localhost:8787/web/scrape
 
-Price: $0.020
+Price: $0.030
 
 When to use: Use when an agent needs to retrieve the main text/article from a web page.
 
@@ -203,14 +207,48 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/scrape -m POST -b '{"url":"https://example.com"}'
+npx agentcash@latest fetch http://localhost:8787/web/scrape -m POST -b '{"url":"https://example.com"}'
+```
+
+## Endpoint: Web Scrape (Free Preflight)
+
+POST http://localhost:8787/web/scrape-preflight
+
+Price: free
+
+When to use: When you want to verify a URL is reachable and returns 200 OK before paying for the full scraped text.
+
+Do not use for: Getting the actual scraped content.
+
+Request body example:
+
+```json
+{
+  "url": "https://example.com"
+}
+```
+
+Response example:
+
+```json
+{
+  "available": true,
+  "status": 200,
+  "next_action": "npx agentcash@latest fetch https://api.codepulse.com/web/scrape -m POST -b '{\"url\":\"https://example.com\"}'"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch http://localhost:8787/web/scrape-preflight -m POST -b '{"url":"https://example.com"}'
 ```
 
 ## Endpoint: HTML to Markdown Downloader
 
-POST https://codepulse-api.hahavoid0.workers.dev/web/markdown
+POST http://localhost:8787/web/markdown
 
-Price: $0.020
+Price: $0.030
 
 When to use: Use when an agent needs a clean markdown rendering of documentation or blogs.
 
@@ -242,12 +280,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/markdown -m POST -b '{"url":"https://example.com"}'
+npx agentcash@latest fetch http://localhost:8787/web/markdown -m POST -b '{"url":"https://example.com"}'
 ```
 
 ## Endpoint: OpenGraph & Metadata Extractor
 
-POST https://codepulse-api.hahavoid0.workers.dev/web/metadata
+POST http://localhost:8787/web/metadata
 
 Price: $0.010
 
@@ -286,12 +324,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/metadata -m POST -b '{"url":"https://example.com"}'
+npx agentcash@latest fetch http://localhost:8787/web/metadata -m POST -b '{"url":"https://example.com"}'
 ```
 
 ## Endpoint: Archive.org Wayback Snapshot Query
 
-POST https://codepulse-api.hahavoid0.workers.dev/web/history
+POST http://localhost:8787/web/history
 
 Price: $0.010
 
@@ -327,12 +365,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/history -m POST -b '{"url":"https://example.com"}'
+npx agentcash@latest fetch http://localhost:8787/web/history -m POST -b '{"url":"https://example.com"}'
 ```
 
 ## Endpoint: RSS/Atom XML Feed Parser
 
-POST https://codepulse-api.hahavoid0.workers.dev/web/rss
+POST http://localhost:8787/web/rss
 
 Price: $0.010
 
@@ -376,12 +414,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/rss -m POST -b '{"url":"https://hnrss.org/frontpage"}'
+npx agentcash@latest fetch http://localhost:8787/web/rss -m POST -b '{"url":"https://hnrss.org/frontpage"}'
 ```
 
 ## Endpoint: Sitemap XML URL Extractor
 
-POST https://codepulse-api.hahavoid0.workers.dev/web/sitemap
+POST http://localhost:8787/web/sitemap
 
 Price: $0.010
 
@@ -418,12 +456,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/sitemap -m POST -b '{"url":"https://example.com/sitemap.xml"}'
+npx agentcash@latest fetch http://localhost:8787/web/sitemap -m POST -b '{"url":"https://example.com/sitemap.xml"}'
 ```
 
 ## Endpoint: Cloudflare DNS Records Query
 
-POST https://codepulse-api.hahavoid0.workers.dev/web/dns-txt
+POST http://localhost:8787/web/dns-txt
 
 Price: $0.010
 
@@ -460,12 +498,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/dns-txt -m POST -b '{"domain":"google.com","type":"TXT"}'
+npx agentcash@latest fetch http://localhost:8787/web/dns-txt -m POST -b '{"domain":"google.com","type":"TXT"}'
 ```
 
 ## Endpoint: Public WHOIS/RDAP Domain Query
 
-POST https://codepulse-api.hahavoid0.workers.dev/web/whois
+POST http://localhost:8787/web/whois
 
 Price: $0.020
 
@@ -501,12 +539,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/web/whois -m POST -b '{"domain":"google.com"}'
+npx agentcash@latest fetch http://localhost:8787/web/whois -m POST -b '{"domain":"google.com"}'
 ```
 
 ## Endpoint: Disposable Mailbox Creator
 
-POST https://codepulse-api.hahavoid0.workers.dev/mailbox/create
+POST http://localhost:8787/mailbox/create
 
 Price: $0.010
 
@@ -538,12 +576,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/mailbox/create -m POST -b '{}'
+npx agentcash@latest fetch http://localhost:8787/mailbox/create -m POST -b '{}'
 ```
 
 ## Endpoint: Mailbox Message Poller
 
-POST https://codepulse-api.hahavoid0.workers.dev/mailbox/messages
+POST http://localhost:8787/mailbox/messages
 
 Price: $0.010
 
@@ -585,14 +623,14 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/mailbox/messages -m POST -b '{"email":"xdf908234@1secmail.com"}'
+npx agentcash@latest fetch http://localhost:8787/mailbox/messages -m POST -b '{"email":"xdf908234@1secmail.com"}'
 ```
 
 ## Endpoint: Temporary Public SMS Numbers
 
-POST https://codepulse-api.hahavoid0.workers.dev/phone/temp-sms
+POST http://localhost:8787/phone/temp-sms
 
-Price: $0.020
+Price: $0.150
 
 When to use: Use when an agent needs a public number to register or verify accounts via SMS.
 
@@ -628,12 +666,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/phone/temp-sms -m POST -b '{}'
+npx agentcash@latest fetch http://localhost:8787/phone/temp-sms -m POST -b '{}'
 ```
 
 ## Endpoint: SMS Message Poller
 
-POST https://codepulse-api.hahavoid0.workers.dev/phone/messages
+POST http://localhost:8787/phone/messages
 
 Price: $0.020
 
@@ -673,12 +711,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/phone/messages -m POST -b '{"phone":"+12134567890"}'
+npx agentcash@latest fetch http://localhost:8787/phone/messages -m POST -b '{"phone":"+12134567890"}'
 ```
 
 ## Endpoint: Temporary Webhook Endpoint Creator
 
-POST https://codepulse-api.hahavoid0.workers.dev/webhook/listen
+POST http://localhost:8787/webhook/listen
 
 Price: $0.010
 
@@ -711,12 +749,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/webhook/listen -m POST -b '{}'
+npx agentcash@latest fetch http://localhost:8787/webhook/listen -m POST -b '{}'
 ```
 
 ## Endpoint: Webhook Callback Poller
 
-POST https://codepulse-api.hahavoid0.workers.dev/webhook/poll
+POST http://localhost:8787/webhook/poll
 
 Price: $0.010
 
@@ -760,12 +798,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/webhook/poll -m POST -b '{"webhook_id":"wh_38f2a28189c4"}'
+npx agentcash@latest fetch http://localhost:8787/webhook/poll -m POST -b '{"webhook_id":"wh_38f2a28189c4"}'
 ```
 
 ## Endpoint: Telegram Bot Dispatcher
 
-POST https://codepulse-api.hahavoid0.workers.dev/notify/telegram
+POST http://localhost:8787/notify/telegram
 
 Price: $0.010
 
@@ -802,12 +840,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/notify/telegram -m POST -b '{"bot_token":"BOT_TOKEN","chat_id":"CHAT_ID","message":"Alert! Task has completed."}'
+npx agentcash@latest fetch http://localhost:8787/notify/telegram -m POST -b '{"bot_token":"BOT_TOKEN","chat_id":"CHAT_ID","message":"Alert! Task has completed."}'
 ```
 
 ## Endpoint: Slack Webhook Alert Dispatcher
 
-POST https://codepulse-api.hahavoid0.workers.dev/notify/slack
+POST http://localhost:8787/notify/slack
 
 Price: $0.010
 
@@ -842,12 +880,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/notify/slack -m POST -b '{"webhook_url":"https://hooks.slack.com/services/...","text":"Deploy complete."}'
+npx agentcash@latest fetch http://localhost:8787/notify/slack -m POST -b '{"webhook_url":"https://hooks.slack.com/services/...","text":"Deploy complete."}'
 ```
 
 ## Endpoint: Discord Webhook Relayer
 
-POST https://codepulse-api.hahavoid0.workers.dev/notify/discord
+POST http://localhost:8787/notify/discord
 
 Price: $0.010
 
@@ -882,12 +920,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/notify/discord -m POST -b '{"webhook_url":"https://discord.com/api/webhooks/...","content":"Alert: balance low!"}'
+npx agentcash@latest fetch http://localhost:8787/notify/discord -m POST -b '{"webhook_url":"https://discord.com/api/webhooks/...","content":"Alert: balance low!"}'
 ```
 
 ## Endpoint: Resend Free Email Dispatcher
 
-POST https://codepulse-api.hahavoid0.workers.dev/notify/email
+POST http://localhost:8787/notify/email
 
 Price: $0.020
 
@@ -924,12 +962,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/notify/email -m POST -b '{"to":"user@example.com","subject":"Hello","body":"Hello from agent!"}'
+npx agentcash@latest fetch http://localhost:8787/notify/email -m POST -b '{"to":"user@example.com","subject":"Hello","body":"Hello from agent!"}'
 ```
 
 ## Endpoint: Domain Availability SOA Checker
 
-POST https://codepulse-api.hahavoid0.workers.dev/domain/check
+POST http://localhost:8787/domain/check
 
 Price: $0.010
 
@@ -964,12 +1002,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/domain/check -m POST -b '{"domain":"unregistered12345domain.net"}'
+npx agentcash@latest fetch http://localhost:8787/domain/check -m POST -b '{"domain":"unregistered12345domain.net"}'
 ```
 
 ## Endpoint: Social Profile Handle Checker
 
-POST https://codepulse-api.hahavoid0.workers.dev/domain/social
+POST http://localhost:8787/domain/social
 
 Price: $0.020
 
@@ -1009,12 +1047,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/domain/social -m POST -b '{"handle":"github"}'
+npx agentcash@latest fetch http://localhost:8787/domain/social -m POST -b '{"handle":"github"}'
 ```
 
 ## Endpoint: Website Official Colors Extractor
 
-POST https://codepulse-api.hahavoid0.workers.dev/brand/palette
+POST http://localhost:8787/brand/palette
 
 Price: $0.010
 
@@ -1051,12 +1089,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/brand/palette -m POST -b '{"url":"https://example.com"}'
+npx agentcash@latest fetch http://localhost:8787/brand/palette -m POST -b '{"url":"https://example.com"}'
 ```
 
 ## Endpoint: Clearbit Corporate Logo Resolver
 
-POST https://codepulse-api.hahavoid0.workers.dev/brand/logo
+POST http://localhost:8787/brand/logo
 
 Price: $0.010
 
@@ -1090,12 +1128,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/brand/logo -m POST -b '{"domain":"stripe.com"}'
+npx agentcash@latest fetch http://localhost:8787/brand/logo -m POST -b '{"domain":"stripe.com"}'
 ```
 
 ## Endpoint: CertSpotter SSL Validity Checker
 
-POST https://codepulse-api.hahavoid0.workers.dev/network/ssl-expiry
+POST http://localhost:8787/network/ssl-expiry
 
 Price: $0.010
 
@@ -1131,12 +1169,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/network/ssl-expiry -m POST -b '{"domain":"google.com"}'
+npx agentcash@latest fetch http://localhost:8787/network/ssl-expiry -m POST -b '{"domain":"google.com"}'
 ```
 
 ## Endpoint: DNSSEC Signatures Verifier
 
-POST https://codepulse-api.hahavoid0.workers.dev/network/dnssec
+POST http://localhost:8787/network/dnssec
 
 Price: $0.010
 
@@ -1173,12 +1211,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/network/dnssec -m POST -b '{"domain":"cloudflare.com"}'
+npx agentcash@latest fetch http://localhost:8787/network/dnssec -m POST -b '{"domain":"cloudflare.com"}'
 ```
 
 ## Endpoint: USPTO Official Patent Lookup
 
-POST https://codepulse-api.hahavoid0.workers.dev/intellectual-property/patent
+POST http://localhost:8787/intellectual-property/patent
 
 Price: $0.050
 
@@ -1215,12 +1253,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/intellectual-property/patent -m POST -b '{"query":"10000000"}'
+npx agentcash@latest fetch http://localhost:8787/intellectual-property/patent -m POST -b '{"query":"10000000"}'
 ```
 
 ## Endpoint: Trademark Index Search
 
-POST https://codepulse-api.hahavoid0.workers.dev/intellectual-property/trademark
+POST http://localhost:8787/intellectual-property/trademark
 
 Price: $0.050
 
@@ -1261,12 +1299,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/intellectual-property/trademark -m POST -b '{"name":"Apple"}'
+npx agentcash@latest fetch http://localhost:8787/intellectual-property/trademark -m POST -b '{"name":"Apple"}'
 ```
 
 ## Endpoint: SEC EDGAR Filings Lookup
 
-POST https://codepulse-api.hahavoid0.workers.dev/company/sec
+POST http://localhost:8787/company/sec
 
 Price: $0.050
 
@@ -1308,12 +1346,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/company/sec -m POST -b '{"cik":"0000320193"}'
+npx agentcash@latest fetch http://localhost:8787/company/sec -m POST -b '{"cik":"0000320193"}'
 ```
 
 ## Endpoint: SEC Corporate Address Resolver
 
-POST https://codepulse-api.hahavoid0.workers.dev/company/address
+POST http://localhost:8787/company/address
 
 Price: $0.020
 
@@ -1350,14 +1388,14 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/company/address -m POST -b '{"cik":"0000320193"}'
+npx agentcash@latest fetch http://localhost:8787/company/address -m POST -b '{"cik":"0000320193"}'
 ```
 
 ## Endpoint: NPM Library Resolver
 
-POST https://codepulse-api.hahavoid0.workers.dev/registry/npm
+POST http://localhost:8787/registry/npm
 
-Price: $0.010
+Price: $0.005
 
 When to use: Use to retrieve the latest version, dependencies, or download tags for an NPM package.
 
@@ -1390,12 +1428,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/npm -m POST -b '{"package":"hono"}'
+npx agentcash@latest fetch http://localhost:8787/registry/npm -m POST -b '{"package":"hono"}'
 ```
 
 ## Endpoint: PyPI Package Resolver
 
-POST https://codepulse-api.hahavoid0.workers.dev/registry/pypi
+POST http://localhost:8787/registry/pypi
 
 Price: $0.010
 
@@ -1430,12 +1468,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/pypi -m POST -b '{"package":"requests"}'
+npx agentcash@latest fetch http://localhost:8787/registry/pypi -m POST -b '{"package":"requests"}'
 ```
 
 ## Endpoint: Rust Crates.io Resolver
 
-POST https://codepulse-api.hahavoid0.workers.dev/registry/crates
+POST http://localhost:8787/registry/crates
 
 Price: $0.010
 
@@ -1471,12 +1509,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/crates -m POST -b '{"crate":"tokio"}'
+npx agentcash@latest fetch http://localhost:8787/registry/crates -m POST -b '{"crate":"tokio"}'
 ```
 
 ## Endpoint: Go Proxy Config Checker
 
-POST https://codepulse-api.hahavoid0.workers.dev/registry/golang
+POST http://localhost:8787/registry/golang
 
 Price: $0.010
 
@@ -1513,12 +1551,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/golang -m POST -b '{"module":"github.com/gin-gonic/gin"}'
+npx agentcash@latest fetch http://localhost:8787/registry/golang -m POST -b '{"module":"github.com/gin-gonic/gin"}'
 ```
 
 ## Endpoint: PHP Composer Packagist Lookup
 
-POST https://codepulse-api.hahavoid0.workers.dev/registry/packagist
+POST http://localhost:8787/registry/packagist
 
 Price: $0.010
 
@@ -1553,12 +1591,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/packagist -m POST -b '{"package":"monolog/monolog"}'
+npx agentcash@latest fetch http://localhost:8787/registry/packagist -m POST -b '{"package":"monolog/monolog"}'
 ```
 
 ## Endpoint: Java Maven Package Resolver
 
-POST https://codepulse-api.hahavoid0.workers.dev/registry/maven
+POST http://localhost:8787/registry/maven
 
 Price: $0.010
 
@@ -1594,12 +1632,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/maven -m POST -b '{"artifact":"log4j"}'
+npx agentcash@latest fetch http://localhost:8787/registry/maven -m POST -b '{"artifact":"log4j"}'
 ```
 
 ## Endpoint: CDNJS File Paths Resolver
 
-POST https://codepulse-api.hahavoid0.workers.dev/registry/cdnjs
+POST http://localhost:8787/registry/cdnjs
 
 Price: $0.010
 
@@ -1634,12 +1672,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/cdnjs -m POST -b '{"library":"react"}'
+npx agentcash@latest fetch http://localhost:8787/registry/cdnjs -m POST -b '{"library":"react"}'
 ```
 
 ## Endpoint: GitHub Repository Stats Lookup
 
-POST https://codepulse-api.hahavoid0.workers.dev/registry/github/repo
+POST http://localhost:8787/registry/github/repo
 
 Price: $0.010
 
@@ -1674,12 +1712,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/github/repo -m POST -b '{"repo":"honojs/hono"}'
+npx agentcash@latest fetch http://localhost:8787/registry/github/repo -m POST -b '{"repo":"honojs/hono"}'
 ```
 
 ## Endpoint: GitHub Tag Release Resolver
 
-POST https://codepulse-api.hahavoid0.workers.dev/registry/github/release
+POST http://localhost:8787/registry/github/release
 
 Price: $0.010
 
@@ -1714,12 +1752,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/github/release -m POST -b '{"repo":"honojs/hono"}'
+npx agentcash@latest fetch http://localhost:8787/registry/github/release -m POST -b '{"repo":"honojs/hono"}'
 ```
 
 ## Endpoint: GitHub Repository License Resolver
 
-POST https://codepulse-api.hahavoid0.workers.dev/registry/github/license
+POST http://localhost:8787/registry/github/license
 
 Price: $0.010
 
@@ -1753,14 +1791,14 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/registry/github/license -m POST -b '{"repo":"honojs/hono"}'
+npx agentcash@latest fetch http://localhost:8787/registry/github/license -m POST -b '{"repo":"honojs/hono"}'
 ```
 
 ## Endpoint: Regex Private Key Scanner
 
-POST https://codepulse-api.hahavoid0.workers.dev/security/secret-scan
+POST http://localhost:8787/security/secret-scan
 
-Price: $0.030
+Price: $0.015
 
 When to use: Use to audit source code or logs before pushing to public repositories.
 
@@ -1798,12 +1836,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/security/secret-scan -m POST -b '{"text":"My database string is mysql://root:secret@localhost"}'
+npx agentcash@latest fetch http://localhost:8787/security/secret-scan -m POST -b '{"text":"My database string is mysql://root:secret@localhost"}'
 ```
 
 ## Endpoint: OSV.dev CVE Library Vulnerabilities Checker
 
-POST https://codepulse-api.hahavoid0.workers.dev/security/cve
+POST http://localhost:8787/security/cve
 
 Price: $0.020
 
@@ -1842,12 +1880,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/security/cve -m POST -b '{"package":"lodash","version":"4.17.15","ecosystem":"npm"}'
+npx agentcash@latest fetch http://localhost:8787/security/cve -m POST -b '{"package":"lodash","version":"4.17.15","ecosystem":"npm"}'
 ```
 
 ## Endpoint: AbuseIPDB IP Reputation Query
 
-POST https://codepulse-api.hahavoid0.workers.dev/security/ip-abuse
+POST http://localhost:8787/security/ip-abuse
 
 Price: $0.020
 
@@ -1882,12 +1920,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/security/ip-abuse -m POST -b '{"ip":"127.0.0.1"}'
+npx agentcash@latest fetch http://localhost:8787/security/ip-abuse -m POST -b '{"ip":"127.0.0.1"}'
 ```
 
 ## Endpoint: Threat Hash Signatures Lookup
 
-POST https://codepulse-api.hahavoid0.workers.dev/security/hash-check
+POST http://localhost:8787/security/hash-check
 
 Price: $0.010
 
@@ -1922,12 +1960,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/security/hash-check -m POST -b '{"hash":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}'
+npx agentcash@latest fetch http://localhost:8787/security/hash-check -m POST -b '{"hash":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}'
 ```
 
 ## Endpoint: HaveIBeenPwned Leak Checker
 
-POST https://codepulse-api.hahavoid0.workers.dev/security/pwned-password
+POST http://localhost:8787/security/pwned-password
 
 Price: $0.010
 
@@ -1962,12 +2000,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/security/pwned-password -m POST -b '{"password":"password123"}'
+npx agentcash@latest fetch http://localhost:8787/security/pwned-password -m POST -b '{"password":"password123"}'
 ```
 
 ## Endpoint: CSP & HSTS Headers Auditing
 
-POST https://codepulse-api.hahavoid0.workers.dev/security/http-headers
+POST http://localhost:8787/security/http-headers
 
 Price: $0.010
 
@@ -2005,12 +2043,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/security/http-headers -m POST -b '{"url":"https://google.com"}'
+npx agentcash@latest fetch http://localhost:8787/security/http-headers -m POST -b '{"url":"https://google.com"}'
 ```
 
 ## Endpoint: Local PDF Text Extractor
 
-POST https://codepulse-api.hahavoid0.workers.dev/media/pdf-text
+POST http://localhost:8787/media/pdf-text
 
 Price: $0.050
 
@@ -2044,12 +2082,45 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/media/pdf-text -m POST -b '{"url":"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"}'
+npx agentcash@latest fetch http://localhost:8787/media/pdf-text -m POST -b '{"url":"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"}'
+```
+
+## Endpoint: Extract PDF Text (Free Preflight)
+
+POST http://localhost:8787/media/pdf-text-preflight
+
+Price: free
+
+When to use: When you want to verify a PDF URL is reachable before paying for extraction.
+
+Do not use for: Getting actual PDF text.
+
+Request body example:
+
+```json
+{
+  "pdf_url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+}
+```
+
+Response example:
+
+```json
+{
+  "available": true,
+  "next_action": "npx agentcash@latest fetch https://api.codepulse.com/media/pdf-text -m POST -b '{\"pdf_url\":\"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf\"}'"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch http://localhost:8787/media/pdf-text-preflight -m POST -b '{"pdf_url":"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"}'
 ```
 
 ## Endpoint: OCR.space Image Text Reader
 
-POST https://codepulse-api.hahavoid0.workers.dev/media/ocr
+POST http://localhost:8787/media/ocr
 
 Price: $0.050
 
@@ -2083,12 +2154,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/media/ocr -m POST -b '{"image_url":"https://i.imgur.com/example.png"}'
+npx agentcash@latest fetch http://localhost:8787/media/ocr -m POST -b '{"image_url":"https://i.imgur.com/example.png"}'
 ```
 
 ## Endpoint: QuickChart.io Visual Generator
 
-POST https://codepulse-api.hahavoid0.workers.dev/media/chart
+POST http://localhost:8787/media/chart
 
 Price: $0.020
 
@@ -2139,12 +2210,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/media/chart -m POST -b '{"chart_config":{"type":"bar","data":{"labels":["Q1","Q2"],"datasets":[{"label":"Sales","data":[100,200]}]}}}'
+npx agentcash@latest fetch http://localhost:8787/media/chart -m POST -b '{"chart_config":{"type":"bar","data":{"labels":["Q1","Q2"],"datasets":[{"label":"Sales","data":[100,200]}]}}}'
 ```
 
 ## Endpoint: Local QR Code Buffer Generator
 
-POST https://codepulse-api.hahavoid0.workers.dev/media/qr-generate
+POST http://localhost:8787/media/qr-generate
 
 Price: $0.010
 
@@ -2178,12 +2249,12 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/media/qr-generate -m POST -b '{"text":"https://codepulse-api.hahavoid0.workers.dev"}'
+npx agentcash@latest fetch http://localhost:8787/media/qr-generate -m POST -b '{"text":"https://codepulse-api.hahavoid0.workers.dev"}'
 ```
 
 ## Endpoint: Barcode Image Parity Decoder
 
-POST https://codepulse-api.hahavoid0.workers.dev/media/barcode-read
+POST http://localhost:8787/media/barcode-read
 
 Price: $0.020
 
@@ -2219,6 +2290,165 @@ Response example:
 AgentCash call:
 
 ```bash
-npx agentcash@latest fetch https://codepulse-api.hahavoid0.workers.dev/media/barcode-read -m POST -b '{"image_url":"https://i.imgur.com/example-barcode.png"}'
+npx agentcash@latest fetch http://localhost:8787/media/barcode-read -m POST -b '{"image_url":"https://i.imgur.com/example-barcode.png"}'
+```
+
+## Endpoint: Request Missing Data
+
+POST http://localhost:8787/agent/request-data
+
+Price: free
+
+When to use: Use when an agent needs live data that this API does not serve yet.
+
+Do not use for: Do not use for polling existing endpoints.
+
+Request body example:
+
+```json
+{
+  "description": "Live train arrivals for Tokyo Metro"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "status": "recorded",
+    "message": "Thank you. Frequently requested data becomes a real endpoint soon."
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch http://localhost:8787/agent/request-data -m POST -b '{"description":"Live train arrivals for Tokyo Metro"}'
+```
+
+## Endpoint: Report Bad Data or Broken Endpoints
+
+POST http://localhost:8787/agent/feedback
+
+Price: free
+
+When to use: Use when an endpoint returns incorrect, stale, or severely malformed data.
+
+Do not use for: Do not use for general support inquiries.
+
+Request body example:
+
+```json
+{
+  "endpoint": "/web/search",
+  "issue": "Results were 5 years old"
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "status": "recorded",
+    "message": "Feedback recorded and prioritized for fixing."
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch http://localhost:8787/agent/feedback -m POST -b '{"endpoint":"/web/search","issue":"Results were 5 years old"}'
+```
+
+## Endpoint: Agent Capability Broadcast
+
+POST http://localhost:8787/agent/discovery-broadcast
+
+Price: $0.010
+
+When to use: Use when an agent wants to be discovered by other agents on the CodePulse network.
+
+Do not use for: Do not use for submitting private URLs or internal endpoints.
+
+Request body example:
+
+```json
+{
+  "agent_name": "Example Researcher",
+  "capabilities_url": "https://example.com/agent.json",
+  "description": "An AI researcher agent that can write reports."
+}
+```
+
+Response example:
+
+```json
+{
+  "supported": true,
+  "result": {
+    "status": "broadcasted",
+    "message": "Agent capabilities added to the public discovery registry.",
+    "registry_url": "https://codepulse-api.hahavoid0.workers.dev/agent-directory"
+  },
+  "confidence": "high",
+  "warnings": [],
+  "disclaimer": "Informational support only. Not legal, tax, medical, veterinary, or financial advice. Verify with the cited official source or a qualified professional before acting.",
+  "data_as_of": "2026-06"
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch http://localhost:8787/agent/discovery-broadcast -m POST -b '{"agent_name":"Example Researcher","capabilities_url":"https://example.com/agent.json","description":"An AI researcher agent that can write reports."}'
+```
+
+## Endpoint: Claim Discovery Bounty
+
+POST http://localhost:8787/discovery/bounty-claim
+
+Price: free
+
+When to use: When you have successfully indexed our OpenAPI or llms.txt on a public AI agent directory and want to claim the reward.
+
+Do not use for: General inquiries.
+
+Request body example:
+
+```json
+{
+  "registry_url": "https://agent-directory.com/codepulse",
+  "wallet_address": "0x..."
+}
+```
+
+Response example:
+
+```json
+{
+  "status": "pending_verification",
+  "message": "Bounty claim received. Will pay 0.50 USDC upon verification.",
+  "bounty_usd": 0.5
+}
+```
+
+AgentCash call:
+
+```bash
+npx agentcash@latest fetch http://localhost:8787/discovery/bounty-claim -m POST -b '{"registry_url":"https://agent-directory.com/codepulse","wallet_address":"0x..."}'
 ```
 

@@ -31,21 +31,21 @@
       "name": "Performs web searches using a free DuckDuckGo HTML parser",
       "endpoint": "https://codepulse-api.hahavoid0.workers.dev/web/search",
       "method": "POST",
-      "price_usd": "0.020",
+      "price_usd": "0.030",
       "description": "Performs web searches using a free DuckDuckGo HTML parser. Returns organic search results."
     },
     {
       "name": "Extracts clean readable text from any website URL",
       "endpoint": "https://codepulse-api.hahavoid0.workers.dev/web/scrape",
       "method": "POST",
-      "price_usd": "0.020",
+      "price_usd": "0.030",
       "description": "Extracts clean readable text from any website URL."
     },
     {
       "name": "Downloads HTML and compiles it to markdown locally using Turndown",
       "endpoint": "https://codepulse-api.hahavoid0.workers.dev/web/markdown",
       "method": "POST",
-      "price_usd": "0.020",
+      "price_usd": "0.030",
       "description": "Downloads HTML and compiles it to markdown locally using Turndown."
     },
     {
@@ -108,7 +108,7 @@
       "name": "Lists active public numbers available for temporary SMS verification codes",
       "endpoint": "https://codepulse-api.hahavoid0.workers.dev/phone/temp-sms",
       "method": "POST",
-      "price_usd": "0.020",
+      "price_usd": "0.150",
       "description": "Lists active public numbers available for temporary SMS verification codes."
     },
     {
@@ -234,7 +234,7 @@
       "name": "Retrieves version history, dependencies, and author details from the official NPM registry",
       "endpoint": "https://codepulse-api.hahavoid0.workers.dev/registry/npm",
       "method": "POST",
-      "price_usd": "0.010",
+      "price_usd": "0.005",
       "description": "Retrieves version history, dependencies, and author details from the official NPM registry."
     },
     {
@@ -304,7 +304,7 @@
       "name": "Runs high-accuracy regular expression scans on a text block to find leaked API keys, tokens, or private keys",
       "endpoint": "https://codepulse-api.hahavoid0.workers.dev/security/secret-scan",
       "method": "POST",
-      "price_usd": "0.030",
+      "price_usd": "0.015",
       "description": "Runs high-accuracy regular expression scans on a text block to find leaked API keys, tokens, or private keys."
     },
     {
